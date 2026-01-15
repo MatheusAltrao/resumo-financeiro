@@ -1,5 +1,5 @@
 "use client";
-import { Trash } from "lucide-react";
+import { Trash, Upload } from "lucide-react";
 import { useState } from "react";
 import Dropzone, { DropzoneState } from "shadcn-dropzone";
 import { Button } from "./button";
@@ -11,8 +11,6 @@ interface DropzoneUIProps {
 export default function DropzoneUI({ onDrop }: DropzoneUIProps) {
   const [previews, setPreviews] = useState<{ [key: string]: string }>({});
   const [files, setFiles] = useState<File[]>([]);
-
-  console.log(files);
 
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return "0 Bytes";
@@ -52,8 +50,11 @@ export default function DropzoneUI({ onDrop }: DropzoneUIProps) {
       >
         {(dropzone: DropzoneState) => (
           <div className="flex items-center flex-col gap-1.5 h-75 border-dashed justify-center rounded-lg">
+            <div className="rounded-full bg-primary/10 p-4 mb-4">
+              <Upload className="h-8 w-8 text-primary" />
+            </div>
             <div className="text-center">
-              <h2 className="font-medium">Clique aqui para adicionar arquivos</h2>
+              <h2 className="font-medium">Arraste ou clique aqui para adicionar arquivos</h2>
               <p className="text-sm text-muted-foreground">Utilize preferencialmente arquivos em formato PDF ou CSV</p>
             </div>
           </div>
