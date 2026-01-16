@@ -5,10 +5,10 @@ import Header from "@/components/header/header";
 
 export default function Home() {
   return (
-    <div className="w-full min-h-screen  mx-auto p-2">
+    <div className="w-full min-h-screen  mx-auto">
       <Header />
 
-      <main className="w-full mx-auto px-4 lg:px-8">
+      <main className="w-full mx-auto p-2 lg:px-8">
         <section className="flex flex-col items-center justify-center max-w-300 mx-auto py-20 space-y-20">
           <div className="text-center  ">
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
