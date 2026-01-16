@@ -1,6 +1,7 @@
 "use client";
 import useGenerateFinanceResume from "@/hooks/use-generate-finance-resume";
 import toast from "react-hot-toast";
+import LoadingIcon from "../loadings/loading-icon";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import DropzoneUI from "../ui/dropzone-ui";
@@ -60,7 +61,7 @@ export default function FinanceForm() {
                 Limpar Tudo
               </Button>
               <Button type="submit" disabled={files.length === 0 || isPending}>
-                {isPending ? "Enviando..." : `Enviar ${files.length} arquivo(s)`}
+                {isPending ? <LoadingIcon text="Enviando..." /> : `Enviar ${files.length} arquivo(s)`}
               </Button>
             </div>
 
