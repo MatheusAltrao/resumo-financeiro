@@ -13,22 +13,16 @@ interface FinanceResumeDisplayProps {
 export default function FinanceResumeDisplay({ data }: FinanceResumeDisplayProps) {
   return (
     <div className="space-y-8 ">
-      {/* Resumo Geral */}
       <SummaryCard data={data.generalSummary} />
 
-      {/* Recebimentos */}
       {data.incomes && data.incomes.length > 0 && <IncomeTable data={data.incomes} />}
 
-      {/* Distribuição de Gastos */}
       {data.expenseDistribution && data.expenseDistribution.length > 0 && <ExpensesDistributionChart data={data.expenseDistribution} />}
 
-      {/* Top Gastos Pix */}
       {data.topPixExpenses && data.topPixExpenses.length > 0 && <TopPixExpensesTable data={data.topPixExpenses} />}
 
-      {/* Resumo por Categoria */}
       {data.categoryBreakdown && data.categoryBreakdown.length > 0 && <CategorySummaryTable data={data.categoryBreakdown} />}
 
-      {/* Análises e Conselhos */}
       <AnalysisAdvice
         padroes={data.patternAnalysis}
         conselho={data.analystAdvice}

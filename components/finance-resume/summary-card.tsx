@@ -30,7 +30,7 @@ export default function SummaryCard({ data }: SummaryCardProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1  lg:grid-cols-4 gap-4">
       {/* Card de Receitas */}
       <Card className="relative overflow-hidden border-l-4 border-l-emerald-500 bg-linear-to-br from-emerald-50 to-white hover:shadow-lg transition-shadow">
         <CardContent className="p-6">
