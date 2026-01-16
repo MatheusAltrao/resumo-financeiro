@@ -1,6 +1,5 @@
 "use client";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import useGenerateFinanceResume from "@/hooks/use-generate-finance-resume";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
@@ -8,30 +7,7 @@ import DropzoneUI from "../ui/dropzone-ui";
 import { Label } from "../ui/label";
 
 export default function FinanceForm() {
-  const [files, setFiles] = useState<File[]>([]);
-
-  const uploadMutation = useMutation({
-    mutationFn: async (formData: FormData) => {
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Erro ao enviar arquivos");
-      }
-
-      return response.json();
-    },
-    onSuccess: (data) => {
-      toast.success(`${files.length} arquivo(s) enviado(s) com sucesso!`);
-      setFiles([]);
-    },
-    onError: (error) => {
-      toast.error("Erro ao enviar os arquivos. Tente novamente.");
-      console.error("Erro no envio:", error);
-    },
-  });
+  const { files, setFiles, data, isError, isPending, error, mutate } = useGenerateFinanceResume();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,8 +22,11 @@ export default function FinanceForm() {
       formData.append("files", file);
     });
 
-    uploadMutation.mutate(formData);
+    mutate(formData);
   };
+
+  console.log("Response data:", data);
+  console.log("Error data:", error);
 
   return (
     <div className="w-full pb-20">
@@ -77,17 +56,15 @@ export default function FinanceForm() {
             </div>
 
             <div className="flex justify-end gap-3">
-              <Button type="button" variant="outline" onClick={() => setFiles([])} disabled={files.length === 0 || uploadMutation.isPending}>
+              <Button type="button" variant="outline" onClick={() => setFiles([])} disabled={files.length === 0 || isPending}>
                 Limpar Tudo
               </Button>
-              <Button type="submit" disabled={files.length === 0 || uploadMutation.isPending}>
-                {uploadMutation.isPending ? "Enviando..." : `Enviar ${files.length} arquivo(s)`}
+              <Button type="submit" disabled={files.length === 0 || isPending}>
+                {isPending ? "Enviando..." : `Enviar ${files.length} arquivo(s)`}
               </Button>
             </div>
 
-            {uploadMutation.isError && (
-              <div className="text-sm text-red-500 text-center">Ocorreu um erro ao enviar os arquivos. Tente novamente.</div>
-            )}
+            {isError && <div className="text-sm text-red-500 text-center">Ocorreu um erro ao enviar os arquivos. Tente novamente.</div>}
           </form>
         </CardContent>
       </Card>

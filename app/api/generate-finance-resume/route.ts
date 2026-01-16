@@ -1,3 +1,4 @@
+import { PRE_PROMPT_OPEN_AI } from "@/consts/open-ai-config";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
@@ -6,21 +7,41 @@ export async function POST(request: Request) {
     apiKey: process.env.OPENAI_API_KEY as string,
   });
 
-  const { prompt } = await request.json();
+  //verificar se esta logado
+  // verificar se tem créditos
 
-  if (!prompt) {
-    return NextResponse.json({ error: "Prompt is required" });
-  }
+  try {
+    const formData = await request.formData();
+    const files = formData.getAll("files") as File[];
 
-  console.log("Prompt received:", prompt);
+    if (!files || files.length === 0) {
+      return NextResponse.json({ error: "Nenhum arquivo foi enviado" }, { status: 400 });
+    }
 
-  /* try {
+    // Aqui você pode processar os arquivos
+    // Por exemplo, ler o conteúdo, converter, etc.
+    const fileContents = await Promise.all(
+      files.map(async (file) => {
+        const text = await file.text();
+        return {
+          name: file.name,
+          type: file.type,
+          content: text,
+        };
+      })
+    );
+
+    // Criar o prompt com base nos arquivos
+    const prompt = `Analise os seguintes documentos financeiros e forneça um resumo:\n\n${fileContents
+      .map((f) => `Arquivo: ${f.name}\n${f.content}`)
+      .join("\n\n")}`;
+
     const response = await openai.chat.completions.create({
-      model: "gpt-4.1",
+      model: "gpt-4o",
       messages: [
         {
           role: "system",
-          content: ``,
+          content: PRE_PROMPT_OPEN_AI,
         },
         { role: "user", content: prompt },
       ],
@@ -32,8 +53,12 @@ export async function POST(request: Request) {
     });
 
     const content = response.choices[0].message.content;
-    return NextResponse.json(content ? content.trim() : "");
+    return NextResponse.json({
+      result: content ? content.trim() : "",
+      filesProcessed: files.length,
+    });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to generate response" + error });
-  } */
+    console.error("Erro ao processar:", error);
+    return NextResponse.json({ error: "Failed to generate response: " + error }, { status: 500 });
+  }
 }
