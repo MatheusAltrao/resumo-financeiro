@@ -5,31 +5,37 @@ import { AlertCircle, AlertTriangle, CheckCircle2, Info, Lightbulb, Target, Tren
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 interface AnalysisAdviceProps {
-  padroes: string[];
-  conselho: AnalystAdvice;
-  conclusao: Conclusion;
-  saldoFinal: number;
-  percentualComprometido: number;
+  patternAnalysis: string[];
+  analystAdvice: AnalystAdvice;
+  conclusion: Conclusion;
+  finalBalance: number;
+  commitmentPercentage: number;
 }
 
-export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFinal = 0, percentualComprometido = 0 }: AnalysisAdviceProps) {
+export default function AnalysisAdvice({
+  patternAnalysis,
+  analystAdvice,
+  conclusion,
+  finalBalance = 0,
+  commitmentPercentage = 0,
+}: AnalysisAdviceProps) {
   // Calculate financial health score (0-100)
   const calculateHealthScore = () => {
     let score = 50; // Base score
 
     // Positive balance adds points
-    if (saldoFinal > 0) {
-      score += Math.min(25, saldoFinal / 100);
+    if (finalBalance > 0) {
+      score += Math.min(25, finalBalance / 100);
     } else {
-      score -= Math.min(25, Math.abs(saldoFinal) / 100);
+      score -= Math.min(25, Math.abs(finalBalance) / 100);
     }
 
     // Lower percentage committed is better
-    if (percentualComprometido < 70) {
+    if (commitmentPercentage < 70) {
       score += 25;
-    } else if (percentualComprometido < 90) {
+    } else if (commitmentPercentage < 90) {
       score += 15;
-    } else if (percentualComprometido < 100) {
+    } else if (commitmentPercentage < 100) {
       score += 5;
     } else {
       score -= 15;
@@ -89,16 +95,16 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
               </div>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
-                  <div className={`h-2 w-2 rounded-full ${saldoFinal >= 0 ? "bg-emerald-500" : "bg-rose-500"}`} />
-                  <span>Saldo: {saldoFinal >= 0 ? "Positivo" : "Negativo"}</span>
+                  <div className={`h-2 w-2 rounded-full ${finalBalance >= 0 ? "bg-emerald-500" : "bg-rose-500"}`} />
+                  <span>Saldo: {finalBalance >= 0 ? "Positivo" : "Negativo"}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div
                     className={`h-2 w-2 rounded-full ${
-                      percentualComprometido < 70 ? "bg-emerald-500" : percentualComprometido < 90 ? "bg-amber-500" : "bg-rose-500"
+                      commitmentPercentage < 70 ? "bg-emerald-500" : commitmentPercentage < 90 ? "bg-amber-500" : "bg-rose-500"
                     }`}
                   />
-                  <span>Comprometimento: {percentualComprometido.toFixed(1)}%</span>
+                  <span>Comprometimento: {commitmentPercentage.toFixed(1)}%</span>
                 </div>
               </div>
             </div>
@@ -117,10 +123,10 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
           </CardHeader>
           <CardContent className="pt-4">
             <ul className="space-y-3">
-              {padroes.map((padrao, index) => (
+              {patternAnalysis.map((pattern, index) => (
                 <li key={index} className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
                   <Info className="h-4 w-4 text-cyan-500 mt-0.5 shrink-0" />
-                  <span className="text-sm">{padrao}</span>
+                  <span className="text-sm">{pattern}</span>
                 </li>
               ))}
             </ul>
@@ -137,10 +143,10 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
           </CardHeader>
           <CardContent className="pt-4">
             <ul className="space-y-3">
-              {conselho.financialRisks.map((risco: string, index: number) => (
+              {analystAdvice.financialRisks.map((risk: string, index: number) => (
                 <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-rose-50 border border-rose-100">
                   <AlertCircle className="h-4 w-4 text-rose-600 mt-0.5 shrink-0" />
-                  <span className="text-sm text-rose-900">{risco}</span>
+                  <span className="text-sm text-rose-900">{risk}</span>
                 </li>
               ))}
             </ul>
@@ -166,9 +172,9 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
                 </div>
                 <h4 className="font-bold text-emerald-700">Ações Recomendadas</h4>
               </div>
-              {conselho.practicalSuggestions.map((sugestao: string, index: number) => (
+              {analystAdvice.practicalSuggestions.map((suggestion: string, index: number) => (
                 <div key={index} className="p-3 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-50 transition-colors">
-                  <p className="text-sm font-medium text-emerald-900">{sugestao}</p>
+                  <p className="text-sm font-medium text-emerald-900">{suggestion}</p>
                 </div>
               ))}
             </div>
@@ -181,9 +187,9 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
                 </div>
                 <h4 className="font-bold text-cyan-700">Próximos Passos</h4>
               </div>
-              {conselho.nextSteps.map((passo: string, index: number) => (
+              {analystAdvice.nextSteps.map((step: string, index: number) => (
                 <div key={index} className="p-3 rounded-lg border border-cyan-200 bg-cyan-50/50 hover:bg-cyan-50 transition-colors">
-                  <p className="text-sm font-medium text-cyan-900">{passo}</p>
+                  <p className="text-sm font-medium text-cyan-900">{step}</p>
                 </div>
               ))}
             </div>
@@ -200,15 +206,15 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 rounded-lg bg-linear-to-br from-blue-50 to-cyan-50 border border-blue-100">
               <p className="text-xs font-bold text-blue-600 uppercase mb-2">Situação Atual</p>
-              <p className="text-sm font-medium text-gray-800">{conclusao.currentSituation}</p>
+              <p className="text-sm font-medium text-gray-800">{conclusion.currentSituation}</p>
             </div>
             <div className="p-4 rounded-lg bg-linear-to-br from-amber-50 to-orange-50 border border-amber-100">
               <p className="text-xs font-bold text-amber-600 uppercase mb-2">Principal Atenção</p>
-              <p className="text-sm font-medium text-gray-800">{conclusao.mainConcern}</p>
+              <p className="text-sm font-medium text-gray-800">{conclusion.mainConcern}</p>
             </div>
             <div className="p-4 rounded-lg bg-linear-to-br from-emerald-50 to-teal-50 border border-emerald-100">
               <p className="text-xs font-bold text-emerald-600 uppercase mb-2">Melhor Ação</p>
-              <p className="text-sm font-medium text-gray-800">{conclusao.bestAction}</p>
+              <p className="text-sm font-medium text-gray-800">{conclusion.bestAction}</p>
             </div>
           </div>
         </CardContent>

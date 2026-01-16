@@ -64,17 +64,17 @@ export default function IncomeTable({ data }: IncomeTableProps) {
             <TableBody>
               {paginatedData.length > 0 ? (
                 <>
-                  {paginatedData.map((recebimento, index) => (
+                  {paginatedData.map((income, index) => (
                     <TableRow key={index} className="hover:bg-muted/30 transition-colors">
-                      <TableCell className="font-medium">{new Date(recebimento.date).toLocaleDateString("pt-BR")}</TableCell>
-                      <TableCell>{recebimento.source}</TableCell>
-                      <TableCell className="max-w-md truncate">{recebimento.description}</TableCell>
+                      <TableCell className="font-medium">{new Date(income.date).toLocaleDateString("pt-BR")}</TableCell>
+                      <TableCell>{income.source}</TableCell>
+                      <TableCell className="max-w-md truncate">{income.description}</TableCell>
                       <TableCell className="text-right">
                         <span className="inline-block px-2 py-1 bg-emerald-50 text-emerald-700 font-semibold rounded">
                           {new Intl.NumberFormat("pt-BR", {
                             style: "currency",
                             currency: "BRL",
-                          }).format(recebimento.value)}
+                          }).format(income.value)}
                         </span>
                       </TableCell>
                     </TableRow>

@@ -24,11 +24,11 @@ export default function FinanceResumeDisplay({ data }: FinanceResumeDisplayProps
       {data.categoryBreakdown && data.categoryBreakdown.length > 0 && <CategorySummaryTable data={data.categoryBreakdown} />}
 
       <AnalysisAdvice
-        padroes={data.patternAnalysis}
-        conselho={data.analystAdvice}
-        conclusao={data.conclusion}
-        saldoFinal={data.generalSummary.finalBalance}
-        percentualComprometido={data.generalSummary.commitmentPercentage}
+        patternAnalysis={data.patternAnalysis}
+        analystAdvice={data.analystAdvice}
+        conclusion={data.conclusion}
+        finalBalance={data.generalSummary.finalBalance}
+        commitmentPercentage={data.generalSummary.commitmentPercentage}
       />
     </div>
   );

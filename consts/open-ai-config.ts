@@ -11,6 +11,35 @@ ATENÇÃO CRÍTICA:
 - Percentuais devem ser números válidos: 25.5 (não 25.)
 - NÃO deixe vírgulas extras no final de arrays ou objetos
 
+REGRAS CRUCIAIS DE CÁLCULO:
+
+🚫 NÃO CONTAR COMO RECEITA:
+- Aplicação RDB / Resgate RDB (movimentações de investimento)
+- Transferências entre contas próprias do mesmo titular
+- Pagamento de fatura (é compensação, não receita)
+
+✅ CONTAR COMO RECEITA REAL:
+- Transferências recebidas de terceiros (salário, pagamentos, etc.)
+- Reembolsos recebidos
+- Rendimentos de investimentos (juros, dividendos)
+
+🚫 NÃO CONTAR COMO DESPESA:
+- Aplicação RDB (é investimento, não gasto)
+- Pagamento de fatura do cartão de crédito (já foi contabilizado nas compras)
+- Transferências entre contas próprias
+
+✅ CONTAR COMO DESPESA REAL:
+- Compras no débito/crédito
+- Transferências Pix para terceiros
+- Pagamento de boletos (água, luz, plano de saúde, etc.)
+- Débitos em conta (tarifas, seguros, etc.)
+
+FÓRMULA OBRIGATÓRIA:
+finalBalance = totalIncome - totalExpenses
+Onde:
+- totalIncome = soma de APENAS receitas reais (conforme regras acima)
+- totalExpenses = soma de APENAS despesas reais (conforme regras acima)
+
 {
   "generalSummary": {
     "totalIncome": number,
@@ -73,20 +102,24 @@ ATENÇÃO CRÍTICA:
  Diretrizes para Análise:
 
 1. RESUMO GERAL:
-   - Calcule receitas, despesas e saldo
-   - Determine percentual comprometido
-   - Classifique como Positivo, Neutro ou Negativo
+   - Calcule receitas REAIS (ignore aplicações/resgates RDB e pagamentos de fatura)
+   - Calcule despesas REAIS (ignore aplicações RDB e pagamentos de fatura)
+   - Calcule saldo: finalBalance = totalIncome - totalExpenses
+   - Determine percentual comprometido: (totalExpenses / totalIncome) * 100
+   - Classifique como Positivo (saldo > 0), Neutro (saldo ≈ 0) ou Negativo (saldo < 0)
 
 2. RECEBIMENTOS:
-   - Liste todas entradas com data, origem e valor
+   - Liste APENAS entradas de dinheiro real (salários, pagamentos, reembolsos)
+   - IGNORE: resgates RDB, transferências próprias
    - Ordene por data
 
 3. DISTRIBUIÇÃO DE GASTOS:
-   - Agrupe por categorias (Alimentação, Moradia, Transporte, Cartão, etc.)
+   - Agrupe por categorias (Alimentação, Moradia, Transporte, Lazer, Saúde, etc.)
+   - IGNORE: aplicações RDB, pagamentos de fatura
    - Calcule valor total e percentual de cada categoria
 
 4. RESUMO POR CATEGORIA:
-   - Detalhe cada gasto dentro da categoria
+   - Detalhe cada gasto real dentro da categoria
    - Ordene gastos do maior para o menor
    - Some o total por categoria
 
@@ -117,4 +150,5 @@ REGRAS CRÍTICAS:
 - NÃO adicione texto antes ou depois do JSON
 - NÃO use emojis ou caracteres especiais
 - A resposta deve começar com { e terminar com }
-- JSON deve ser válido e parseável`;
+- JSON deve ser válido e parseável
+- SIGA RIGOROSAMENTE as regras de cálculo para evitar duplicação e erros`;
