@@ -43,10 +43,12 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
   const scoreLabel = healthScore >= 70 ? "Saudável" : healthScore >= 40 ? "Atenção" : "Crítico";
   const scoreBgColor = healthScore >= 70 ? "from-emerald-50 to-teal-50" : healthScore >= 40 ? "from-amber-50 to-yellow-50" : "from-rose-50 to-red-50";
 
+  const borderColor = healthScore >= 70 ? "border-emerald-400" : healthScore >= 40 ? "border-amber-400" : "border-rose-400";
+
   return (
     <div className="space-y-6">
       {/* Financial Health Score */}
-      <Card className={`border-2 bg-linear-to-br ${scoreBgColor}`}>
+      <Card className={`border-2 bg-linear-to-br ${scoreBgColor} ${borderColor} `}>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-xl">
             <TrendingUp className="h-6 w-6 text-cyan-600" />
@@ -108,7 +110,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Análise de Padrões */}
         <Card className="border-l-4 border-l-cyan-500">
-          <CardHeader className="bg-linear-to-r from-cyan-50 to-white">
+          <CardHeader className="bg-linear-to-r ">
             <CardTitle className="flex items-center gap-2 text-lg">
               <TrendingUp className="h-5 w-5 text-cyan-600" />
               Análise de Padrões
@@ -128,7 +130,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
 
         {/* Riscos Financeiros */}
         <Card className="border-l-4 border-l-rose-500">
-          <CardHeader className="bg-linear-to-r from-rose-50 to-white">
+          <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg text-rose-700">
               <AlertTriangle className="h-5 w-5" />
               Riscos Identificados
@@ -149,7 +151,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
 
       {/* Recomendações */}
       <Card>
-        <CardHeader className="bg-linear-to-r from-emerald-50 to-teal-50">
+        <CardHeader>
           <CardTitle className="flex items-center gap-2 text-xl">
             <Lightbulb className="h-6 w-6 text-emerald-600" />
             Recomendações Personalizadas
@@ -192,7 +194,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
 
       {/* Conclusão Executiva */}
       <Card className="border-2 border-cyan-500 shadow-lg">
-        <CardHeader className="bg-linear-to-r from-cyan-600 to-teal-600 text-white">
+        <CardHeader className="bg-linear-to-r  ">
           <CardTitle className="text-xl">📋 Conclusão Executiva</CardTitle>
         </CardHeader>
         <CardContent className="pt-6 space-y-4">
