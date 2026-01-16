@@ -7,24 +7,8 @@ import FinanceResumeDisplay from "../finance-resume/finance-resume-display";
 import FinanceForm from "./finance-form";
 
 export default function FinanceArea() {
-  const { files, setFiles, data, isError, isPending, error, mutate } = useGenerateFinanceResume();
+  const { files, setFiles, data, isError, isPending, mutate } = useGenerateFinanceResume();
   const [financeData, setFinanceData] = useState<FinanceResume | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (files.length === 0) {
-      toast.error("Por favor, adicione pelo menos um arquivo antes de enviar.");
-      return;
-    }
-
-    const formData = new FormData();
-    files.forEach((file) => {
-      formData.append("files", file);
-    });
-
-    mutate(formData);
-  };
 
   useEffect(() => {
     if (data?.result) {

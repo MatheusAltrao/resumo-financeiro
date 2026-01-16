@@ -36,36 +36,40 @@ export default function FinanceForm({ files, setFiles, isPending, isError, mutat
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Envio de Documentos Financeiros</CardTitle>
-        <CardDescription>
-          <FormDescription />
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <Label>Documentos</Label>
-            <DropzoneUI files={files} setFiles={setFiles} />
-          </div>
+    <>
+      {isPending && financeData && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Envio de Documentos Financeiros</CardTitle>
+            <CardDescription>
+              <FormDescription />
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <Label>Documentos</Label>
+                <DropzoneUI files={files} setFiles={setFiles} />
+              </div>
 
-          {isPending && <GenerateResumeLoading loading={isPending} />}
+              {!financeData && (
+                <div className="flex justify-end gap-3">
+                  <Button type="button" variant="outline" onClick={() => setFiles([])} disabled={files.length === 0 || isPending}>
+                    Limpar Tudo
+                  </Button>
+                  <Button type="submit" disabled={files.length === 0 || isPending}>
+                    {isPending ? <IconLoading text="Enviando..." /> : `Enviar ${files.length} arquivo(s)`}
+                  </Button>
+                </div>
+              )}
 
-          {!financeData && (
-            <div className="flex justify-end gap-3">
-              <Button type="button" variant="outline" onClick={() => setFiles([])} disabled={files.length === 0 || isPending}>
-                Limpar Tudo
-              </Button>
-              <Button type="submit" disabled={files.length === 0 || isPending}>
-                {isPending ? <IconLoading text="Enviando..." /> : `Enviar ${files.length} arquivo(s)`}
-              </Button>
-            </div>
-          )}
+              {isError && <div className="text-sm text-red-500 text-center">Ocorreu um erro ao enviar os arquivos. Tente novamente.</div>}
+            </form>
+          </CardContent>
+        </Card>
+      )}
 
-          {isError && <div className="text-sm text-red-500 text-center">Ocorreu um erro ao enviar os arquivos. Tente novamente.</div>}
-        </form>
-      </CardContent>
-    </Card>
+      {isPending && <GenerateResumeLoading loading={isPending} />}
+    </>
   );
 }
