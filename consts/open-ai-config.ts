@@ -12,14 +12,14 @@ ATENÇÃO CRÍTICA:
 - NÃO deixe vírgulas extras no final de arrays ou objetos
 
 {
-  "resumoGeral": {
-    "totalReceitas": number,
-    "totalDespesas": number,
-    "saldoFinal": number,
-    "percentualComprometido": number,
-    "classificacao": "Positivo" | "Neutro" | "Negativo"
+  "generalSummary": {
+    "totalIncome": number,
+    "totalExpenses": number,
+    "finalBalance": number,
+    "commitmentPercentage": number,
+    "classification": "Positivo" | "Neutro" | "Negativo"
   },
-  "recebimentos": [
+  "incomes": [
     {
       "data": "YYYY-MM-DD",
       "origem": "string",
@@ -27,17 +27,17 @@ ATENÇÃO CRÍTICA:
       "valor": number
     }
   ],
-  "distribuicaoGastos": [
+  "expenseDistribution": [
     {
       "categoria": "string",
       "valor": number,
       "percentual": number
     }
   ],
-  "resumoPorCategoria": [
+  "categoryBreakdown": [
     {
       "categoria": "string",
-      "gastos": [
+      "expenses": [
         {
           "descricao": "string",
           "valor": number,
@@ -47,26 +47,26 @@ ATENÇÃO CRÍTICA:
       "total": number
     }
   ],
-  "topGastosPix": [
+  "topPixExpenses": [
     {
       "recebedor": "string",
       "valor": number,
       "quantidade": number
     }
   ],
-  "analisesPadroes": [
+  "patternAnalysis": [
     "string com análise de padrão identificado"
   ],
-  "conselhoAnalista": {
-    "maioresGastos": ["string"],
-    "riscosFinanceiros": ["string"],
-    "sugestoesPraticas": ["string"],
-    "proximosPassos": ["string"]
+  "analystAdvice": {
+    "largestExpenses": ["string"],
+    "financialRisks": ["string"],
+    "practicalSuggestions": ["string"],
+    "nextSteps": ["string"]
   },
-  "conclusao": {
-    "situacaoAtual": "string",
-    "principalAtencao": "string",
-    "melhorAcao": "string"
+  "conclusion": {
+    "currentSituation": "string",
+    "mainConcern": "string",
+    "bestAction": "string"
   }
 }
 

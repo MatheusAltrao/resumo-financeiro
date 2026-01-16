@@ -9,9 +9,10 @@ interface DropzoneUIProps {
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
   maxFiles?: number;
+  isPending: boolean;
 }
 
-export default function DropzoneUI({ files, setFiles, maxFiles = 3 }: DropzoneUIProps) {
+export default function DropzoneUI({ files, setFiles, maxFiles = 3, isPending }: DropzoneUIProps) {
   const [previews, setPreviews] = useState<{ [key: string]: string }>({});
   const [error, setError] = useState<string | null>(null);
 
@@ -73,7 +74,7 @@ export default function DropzoneUI({ files, setFiles, maxFiles = 3 }: DropzoneUI
           filesToAdd.forEach(createPreview);
           setFiles((prev) => [...prev, ...filesToAdd]);
         }}
-        disabled={files.length >= maxFiles}
+        disabled={files.length >= maxFiles || isPending}
       >
         {(dropzone: DropzoneState) => (
           <div className="flex items-center flex-col gap-1.5 h-75 border-dashed justify-center rounded-lg">
@@ -111,7 +112,7 @@ export default function DropzoneUI({ files, setFiles, maxFiles = 3 }: DropzoneUI
                 </p>
               </div>
 
-              <Button variant={"destructive"} size="icon" onClick={() => handleDeleteFile(file)} type="button">
+              <Button disabled={isPending} variant={"destructive"} size="icon" onClick={() => handleDeleteFile(file)} type="button">
                 <Trash className="h-4 w-4" />
               </Button>
             </li>

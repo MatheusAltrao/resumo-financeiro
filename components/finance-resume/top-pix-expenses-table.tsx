@@ -1,9 +1,9 @@
-import { TopGastoPix } from "@/types/finance-resume";
+import { TopPixExpense } from "@/types/finance-resume";
 import { ArrowUpCircle, TrendingUp, User } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 interface TopPixExpensesTableProps {
-  data: TopGastoPix[];
+  data: TopPixExpense[];
 }
 
 export default function TopPixExpensesTable({ data }: TopPixExpensesTableProps) {

@@ -1,13 +1,13 @@
 "use client";
 
-import { ResumoPorCategoria } from "@/types/finance-resume";
+import { CategorySummary } from "@/types/finance-resume";
 import { Package } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { Card, CardContent } from "../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 
 interface CategorySummaryTableProps {
-  data: ResumoPorCategoria[];
+  data: CategorySummary[];
 }
 
 const getCategoryColor = (index: number) => {
@@ -45,7 +45,7 @@ export default function CategorySummaryTable({ data }: CategorySummaryTableProps
                         </div>
                         <div className="text-left">
                           <h4 className={`font-bold text-base ${colorScheme.text}`}>{categoria.categoria}</h4>
-                          <p className="text-xs text-muted-foreground">{categoria.gastos.length} transações</p>
+                          <p className="text-xs text-muted-foreground">{categoria.expenses.length} transações</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
@@ -72,7 +72,7 @@ export default function CategorySummaryTable({ data }: CategorySummaryTableProps
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {categoria.gastos
+                          {categoria.expenses
                             .sort((a, b) => b.valor - a.valor)
                             .map((gasto, gastoIndex) => (
                               <TableRow key={gastoIndex} className="hover:bg-muted/30 transition-colors">

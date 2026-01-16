@@ -37,7 +37,7 @@ export default function FinanceForm({ files, setFiles, isPending, isError, mutat
 
   return (
     <>
-      {isPending && financeData && (
+      {!financeData && (
         <Card>
           <CardHeader>
             <CardTitle>Envio de Documentos Financeiros</CardTitle>
@@ -49,7 +49,7 @@ export default function FinanceForm({ files, setFiles, isPending, isError, mutat
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label>Documentos</Label>
-                <DropzoneUI files={files} setFiles={setFiles} />
+                <DropzoneUI files={files} setFiles={setFiles} isPending={isPending} />
               </div>
 
               {!financeData && (

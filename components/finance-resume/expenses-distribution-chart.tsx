@@ -1,11 +1,11 @@
 "use client";
 
-import { DistribuicaoGasto } from "@/types/finance-resume";
+import { ExpenseDistribution } from "@/types/finance-resume";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 interface ExpensesDistributionChartProps {
-  data: DistribuicaoGasto[];
+  data: ExpenseDistribution[];
 }
 
 const COLORS = ["#06b6d4", "#10b981", "#8b5cf6", "#f59e0b", "#ef4444", "#ec4899", "#14b8a6", "#f97316"];

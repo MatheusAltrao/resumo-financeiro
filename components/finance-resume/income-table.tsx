@@ -1,6 +1,6 @@
 "use client";
 
-import { Recebimento } from "@/types/finance-resume";
+import { Income } from "@/types/finance-resume";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
@@ -8,7 +8,7 @@ import { Input } from "../ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 
 interface IncomeTableProps {
-  data: Recebimento[];
+  data: Income[];
 }
 
 export default function IncomeTable({ data }: IncomeTableProps) {

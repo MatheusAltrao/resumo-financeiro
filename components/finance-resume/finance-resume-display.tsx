@@ -14,27 +14,27 @@ export default function FinanceResumeDisplay({ data }: FinanceResumeDisplayProps
   return (
     <div className="space-y-8 mt-8">
       {/* Resumo Geral */}
-      <SummaryCard data={data.resumoGeral} />
+      <SummaryCard data={data.generalSummary} />
 
       {/* Recebimentos */}
-      {data.recebimentos && data.recebimentos.length > 0 && <IncomeTable data={data.recebimentos} />}
+      {data.incomes && data.incomes.length > 0 && <IncomeTable data={data.incomes} />}
 
       {/* Distribuição de Gastos */}
-      {data.distribuicaoGastos && data.distribuicaoGastos.length > 0 && <ExpensesDistributionChart data={data.distribuicaoGastos} />}
+      {data.expenseDistribution && data.expenseDistribution.length > 0 && <ExpensesDistributionChart data={data.expenseDistribution} />}
 
       {/* Top Gastos Pix */}
-      {data.topGastosPix && data.topGastosPix.length > 0 && <TopPixExpensesTable data={data.topGastosPix} />}
+      {data.topPixExpenses && data.topPixExpenses.length > 0 && <TopPixExpensesTable data={data.topPixExpenses} />}
 
       {/* Resumo por Categoria */}
-      {data.resumoPorCategoria && data.resumoPorCategoria.length > 0 && <CategorySummaryTable data={data.resumoPorCategoria} />}
+      {data.categoryBreakdown && data.categoryBreakdown.length > 0 && <CategorySummaryTable data={data.categoryBreakdown} />}
 
       {/* Análises e Conselhos */}
       <AnalysisAdvice
-        padroes={data.analisesPadroes}
-        conselho={data.conselhoAnalista}
-        conclusao={data.conclusao}
-        saldoFinal={data.resumoGeral.saldoFinal}
-        percentualComprometido={data.resumoGeral.percentualComprometido}
+        padroes={data.patternAnalysis}
+        conselho={data.analystAdvice}
+        conclusao={data.conclusion}
+        saldoFinal={data.generalSummary.finalBalance}
+        percentualComprometido={data.generalSummary.commitmentPercentage}
       />
     </div>
   );

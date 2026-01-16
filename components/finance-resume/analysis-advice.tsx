@@ -1,13 +1,13 @@
 "use client";
 
-import { Conclusao, ConselhoAnalista } from "@/types/finance-resume";
+import { AnalystAdvice, Conclusion } from "@/types/finance-resume";
 import { AlertCircle, AlertTriangle, CheckCircle2, Info, Lightbulb, Target, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 interface AnalysisAdviceProps {
   padroes: string[];
-  conselho: ConselhoAnalista;
-  conclusao: Conclusao;
+  conselho: AnalystAdvice;
+  conclusao: Conclusion;
   saldoFinal: number;
   percentualComprometido: number;
 }
@@ -136,7 +136,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
           </CardHeader>
           <CardContent className="pt-4">
             <ul className="space-y-3">
-              {conselho.riscosFinanceiros.map((risco, index) => (
+              {conselho.financialRisks.map((risco: string, index: number) => (
                 <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-rose-50 border border-rose-100">
                   <AlertCircle className="h-4 w-4 text-rose-600 mt-0.5 shrink-0" />
                   <span className="text-sm text-rose-900">{risco}</span>
@@ -165,7 +165,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
                 </div>
                 <h4 className="font-bold text-emerald-700">Ações Recomendadas</h4>
               </div>
-              {conselho.sugestoesPraticas.map((sugestao, index) => (
+              {conselho.practicalSuggestions.map((sugestao: string, index: number) => (
                 <div key={index} className="p-3 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-50 transition-colors">
                   <p className="text-sm font-medium text-emerald-900">{sugestao}</p>
                 </div>
@@ -180,7 +180,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
                 </div>
                 <h4 className="font-bold text-cyan-700">Próximos Passos</h4>
               </div>
-              {conselho.proximosPassos.map((passo, index) => (
+              {conselho.nextSteps.map((passo: string, index: number) => (
                 <div key={index} className="p-3 rounded-lg border border-cyan-200 bg-cyan-50/50 hover:bg-cyan-50 transition-colors">
                   <p className="text-sm font-medium text-cyan-900">{passo}</p>
                 </div>
@@ -199,15 +199,15 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 rounded-lg bg-linear-to-br from-blue-50 to-cyan-50 border border-blue-100">
               <p className="text-xs font-bold text-blue-600 uppercase mb-2">Situação Atual</p>
-              <p className="text-sm font-medium text-gray-800">{conclusao.situacaoAtual}</p>
+              <p className="text-sm font-medium text-gray-800">{conclusao.currentSituation}</p>
             </div>
             <div className="p-4 rounded-lg bg-linear-to-br from-amber-50 to-orange-50 border border-amber-100">
               <p className="text-xs font-bold text-amber-600 uppercase mb-2">Principal Atenção</p>
-              <p className="text-sm font-medium text-gray-800">{conclusao.principalAtencao}</p>
+              <p className="text-sm font-medium text-gray-800">{conclusao.mainConcern}</p>
             </div>
             <div className="p-4 rounded-lg bg-linear-to-br from-emerald-50 to-teal-50 border border-emerald-100">
               <p className="text-xs font-bold text-emerald-600 uppercase mb-2">Melhor Ação</p>
-              <p className="text-sm font-medium text-gray-800">{conclusao.melhorAcao}</p>
+              <p className="text-sm font-medium text-gray-800">{conclusao.bestAction}</p>
             </div>
           </div>
         </CardContent>
