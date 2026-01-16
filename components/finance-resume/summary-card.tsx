@@ -32,7 +32,7 @@ export default function SummaryCard({ data }: SummaryCardProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Card de Receitas */}
-      <Card className="relative overflow-hidden border-l-4 border-l-emerald-500 bg-gradient-to-br from-emerald-50 to-white hover:shadow-lg transition-shadow">
+      <Card className="relative overflow-hidden border-l-4 border-l-emerald-500 bg-linear-to-br from-emerald-50 to-white hover:shadow-lg transition-shadow">
         <CardContent className="p-6">
           <div className="flex items-start justify-between">
             <div className="space-y-1">
@@ -52,7 +52,7 @@ export default function SummaryCard({ data }: SummaryCardProps) {
       </Card>
 
       {/* Card de Despesas */}
-      <Card className="relative overflow-hidden border-l-4 border-l-rose-500 bg-gradient-to-br from-rose-50 to-white hover:shadow-lg transition-shadow">
+      <Card className="relative overflow-hidden border-l-4 border-l-rose-500 bg-linear-to-br from-rose-50 to-white hover:shadow-lg transition-shadow">
         <CardContent className="p-6">
           <div className="flex items-start justify-between">
             <div className="space-y-1">
@@ -74,7 +74,7 @@ export default function SummaryCard({ data }: SummaryCardProps) {
       {/* Card de Saldo */}
       <Card
         className={`relative overflow-hidden border-l-4 ${
-          data.saldoFinal >= 0 ? "border-l-cyan-500 bg-gradient-to-br from-cyan-50" : "border-l-orange-500 bg-gradient-to-br from-orange-50"
+          data.saldoFinal >= 0 ? "border-l-cyan-500 bg-linear-to-br from-cyan-50" : "border-l-orange-500 bg-linear-to-br from-orange-50"
         } to-white hover:shadow-lg transition-shadow`}
       >
         <CardContent className="p-6">
@@ -99,10 +99,10 @@ export default function SummaryCard({ data }: SummaryCardProps) {
       <Card
         className={`relative overflow-hidden border-l-4 ${
           data.classificacao === "Positivo"
-            ? "border-l-teal-500 bg-gradient-to-br from-teal-50"
+            ? "border-l-teal-500 bg-linear-to-br from-teal-50"
             : data.classificacao === "Negativo"
-            ? "border-l-amber-500 bg-gradient-to-br from-amber-50"
-            : "border-l-yellow-500 bg-gradient-to-br from-yellow-50"
+            ? "border-l-amber-500 bg-linear-to-br from-amber-50"
+            : "border-l-yellow-500 bg-linear-to-br from-yellow-50"
         } to-white hover:shadow-lg transition-shadow`}
       >
         <CardContent className="p-6">

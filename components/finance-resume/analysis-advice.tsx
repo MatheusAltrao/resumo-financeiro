@@ -46,7 +46,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
   return (
     <div className="space-y-6">
       {/* Financial Health Score */}
-      <Card className={`border-2 bg-gradient-to-br ${scoreBgColor}`}>
+      <Card className={`border-2 bg-linear-to-br ${scoreBgColor}`}>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-xl">
             <TrendingUp className="h-6 w-6 text-cyan-600" />
@@ -108,7 +108,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Análise de Padrões */}
         <Card className="border-l-4 border-l-cyan-500">
-          <CardHeader className="bg-gradient-to-r from-cyan-50 to-white">
+          <CardHeader className="bg-linear-to-r from-cyan-50 to-white">
             <CardTitle className="flex items-center gap-2 text-lg">
               <TrendingUp className="h-5 w-5 text-cyan-600" />
               Análise de Padrões
@@ -118,7 +118,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
             <ul className="space-y-3">
               {padroes.map((padrao, index) => (
                 <li key={index} className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
-                  <Info className="h-4 w-4 text-cyan-500 mt-0.5 flex-shrink-0" />
+                  <Info className="h-4 w-4 text-cyan-500 mt-0.5 shrink-0" />
                   <span className="text-sm">{padrao}</span>
                 </li>
               ))}
@@ -128,7 +128,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
 
         {/* Riscos Financeiros */}
         <Card className="border-l-4 border-l-rose-500">
-          <CardHeader className="bg-gradient-to-r from-rose-50 to-white">
+          <CardHeader className="bg-linear-to-r from-rose-50 to-white">
             <CardTitle className="flex items-center gap-2 text-lg text-rose-700">
               <AlertTriangle className="h-5 w-5" />
               Riscos Identificados
@@ -138,7 +138,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
             <ul className="space-y-3">
               {conselho.riscosFinanceiros.map((risco, index) => (
                 <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-rose-50 border border-rose-100">
-                  <AlertCircle className="h-4 w-4 text-rose-600 mt-0.5 flex-shrink-0" />
+                  <AlertCircle className="h-4 w-4 text-rose-600 mt-0.5 shrink-0" />
                   <span className="text-sm text-rose-900">{risco}</span>
                 </li>
               ))}
@@ -149,7 +149,7 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
 
       {/* Recomendações */}
       <Card>
-        <CardHeader className="bg-gradient-to-r from-emerald-50 to-teal-50">
+        <CardHeader className="bg-linear-to-r from-emerald-50 to-teal-50">
           <CardTitle className="flex items-center gap-2 text-xl">
             <Lightbulb className="h-6 w-6 text-emerald-600" />
             Recomendações Personalizadas
@@ -192,20 +192,20 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
 
       {/* Conclusão Executiva */}
       <Card className="border-2 border-cyan-500 shadow-lg">
-        <CardHeader className="bg-gradient-to-r from-cyan-600 to-teal-600 text-white">
+        <CardHeader className="bg-linear-to-r from-cyan-600 to-teal-600 text-white">
           <CardTitle className="text-xl">📋 Conclusão Executiva</CardTitle>
         </CardHeader>
         <CardContent className="pt-6 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-lg bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-100">
+            <div className="p-4 rounded-lg bg-linear-to-br from-blue-50 to-cyan-50 border border-blue-100">
               <p className="text-xs font-bold text-blue-600 uppercase mb-2">Situação Atual</p>
               <p className="text-sm font-medium text-gray-800">{conclusao.situacaoAtual}</p>
             </div>
-            <div className="p-4 rounded-lg bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100">
+            <div className="p-4 rounded-lg bg-linear-to-br from-amber-50 to-orange-50 border border-amber-100">
               <p className="text-xs font-bold text-amber-600 uppercase mb-2">Principal Atenção</p>
               <p className="text-sm font-medium text-gray-800">{conclusao.principalAtencao}</p>
             </div>
-            <div className="p-4 rounded-lg bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100">
+            <div className="p-4 rounded-lg bg-linear-to-br from-emerald-50 to-teal-50 border border-emerald-100">
               <p className="text-xs font-bold text-emerald-600 uppercase mb-2">Melhor Ação</p>
               <p className="text-sm font-medium text-gray-800">{conclusao.melhorAcao}</p>
             </div>

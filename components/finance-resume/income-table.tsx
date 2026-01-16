@@ -79,7 +79,7 @@ export default function IncomeTable({ data }: IncomeTableProps) {
                       </TableCell>
                     </TableRow>
                   ))}
-                  <TableRow className="bg-gradient-to-r from-emerald-50 to-teal-50 border-t-2">
+                  <TableRow className="bg-linear-to-r from-emerald-50 to-teal-50 border-t-2">
                     <TableCell colSpan={3} className="font-bold text-base">
                       Total Recebido
                     </TableCell>
