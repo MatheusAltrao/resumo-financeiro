@@ -81,10 +81,7 @@ export default function ExpensesDistributionChart({ data }: ExpensesDistribution
                 className="flex items-center justify-between p-3 border rounded-lg hover:shadow-md transition-shadow bg-gradient-to-r from-white to-gray-50"
               >
                 <div className="flex items-center gap-3">
-                  <div
-                    className="w-3 h-3 rounded-full ring-2 ring-offset-2"
-                    style={{ backgroundColor: COLORS[index % COLORS.length], ringColor: COLORS[index % COLORS.length] + "40" }}
-                  />
+                  <div className="w-3 h-3 rounded-full ring-2 ring-offset-2" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
                   <span className="font-semibold text-sm">{item.categoria}</span>
                 </div>
                 <div className="text-right">

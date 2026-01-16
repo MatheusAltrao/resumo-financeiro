@@ -36,8 +36,8 @@ export default function CategorySummaryTable({ data }: CategorySummaryTableProps
             const colorScheme = getCategoryColor(catIndex);
             return (
               <AccordionItem key={catIndex} value={`item-${catIndex}`} className="border-none ">
-                <Card className={`overflow-hidden border-l-4 h-full p-8 ${colorScheme.border}`}>
-                  <AccordionTrigger className="hover:no-underline">
+                <Card className={`overflow-hidden border-l-4 h-full p-0  ${colorScheme.border}`}>
+                  <AccordionTrigger className="hover:no-underline cursor-pointer h-full p-8  ">
                     <div className={`flex items-center justify-between w-full pr-4  rounded-lg p-3 -m-3`}>
                       <div className="flex items-center gap-3">
                         <div className={`h-10 w-10 rounded-full ${colorScheme.icon} flex items-center justify-center`}>
