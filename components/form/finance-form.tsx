@@ -2,11 +2,10 @@
 import { FinanceResume } from "@/types/finance-resume";
 import toast from "react-hot-toast";
 import GenerateResumeLoading from "../loadings/generate-resume-loading";
-import IconLoading from "../loadings/icon-loading";
-import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import DropzoneUI from "../ui/dropzone-ui";
 import { Label } from "../ui/label";
+import ButtonsActionForm from "./buttons-action-form";
 import FormDescription from "./form-descriptrion";
 
 interface FinanceFormProps {
@@ -52,16 +51,7 @@ export default function FinanceForm({ files, setFiles, isPending, isError, mutat
                 <DropzoneUI files={files} setFiles={setFiles} isPending={isPending} />
               </div>
 
-              {!financeData && (
-                <div className="flex justify-end gap-3">
-                  <Button type="button" variant="outline" onClick={() => setFiles([])} disabled={files.length === 0 || isPending}>
-                    Limpar Tudo
-                  </Button>
-                  <Button type="submit" disabled={files.length === 0 || isPending}>
-                    {isPending ? <IconLoading text="Enviando..." /> : `Enviar ${files.length} arquivo(s)`}
-                  </Button>
-                </div>
-              )}
+              {!financeData && <ButtonsActionForm files={files} setFiles={setFiles} isPending={isPending} />}
 
               {isError && <div className="text-sm text-red-500 text-center">Ocorreu um erro ao enviar os arquivos. Tente novamente.</div>}
             </form>

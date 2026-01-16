@@ -13,7 +13,7 @@ interface FinanceResumeDisplayProps {
 export default function FinanceResumeDisplay({ data }: FinanceResumeDisplayProps) {
   return (
     <div className="space-y-8 ">
-      <SummaryCard data={data.generalSummary} />
+      {data.generalSummary && <SummaryCard data={data.generalSummary} />}
 
       {data.incomes && data.incomes.length > 0 && <IncomeTable data={data.incomes} />}
 
