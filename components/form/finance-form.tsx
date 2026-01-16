@@ -1,4 +1,5 @@
 "use client";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
@@ -8,25 +9,9 @@ import { Label } from "../ui/label";
 
 export default function FinanceForm() {
   const [files, setFiles] = useState<File[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (files.length === 0) {
-      toast.error("Por favor, adicione pelo menos um arquivo antes de enviar.");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const formData = new FormData();
-      files.forEach((file) => {
-        formData.append("files", file);
-      });
-
-      // Envio para o backend
+  const uploadMutation = useMutation({
+    mutationFn: async (formData: FormData) => {
       const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
@@ -36,16 +21,32 @@ export default function FinanceForm() {
         throw new Error("Erro ao enviar arquivos");
       }
 
-      const data = await response.json();
-
+      return response.json();
+    },
+    onSuccess: (data) => {
       toast.success(`${files.length} arquivo(s) enviado(s) com sucesso!`);
       setFiles([]);
-    } catch (error) {
+    },
+    onError: (error) => {
       toast.error("Erro ao enviar os arquivos. Tente novamente.");
       console.error("Erro no envio:", error);
-    } finally {
-      setIsSubmitting(false);
+    },
+  });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (files.length === 0) {
+      toast.error("Por favor, adicione pelo menos um arquivo antes de enviar.");
+      return;
     }
+
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("files", file);
+    });
+
+    uploadMutation.mutate(formData);
   };
 
   return (
@@ -76,13 +77,17 @@ export default function FinanceForm() {
             </div>
 
             <div className="flex justify-end gap-3">
-              <Button type="button" variant="outline" onClick={() => setFiles([])} disabled={files.length === 0 || isSubmitting}>
+              <Button type="button" variant="outline" onClick={() => setFiles([])} disabled={files.length === 0 || uploadMutation.isPending}>
                 Limpar Tudo
               </Button>
-              <Button type="submit" disabled={files.length === 0 || isSubmitting}>
-                {isSubmitting ? "Enviando..." : `Enviar ${files.length} arquivo(s)`}
+              <Button type="submit" disabled={files.length === 0 || uploadMutation.isPending}>
+                {uploadMutation.isPending ? "Enviando..." : `Enviar ${files.length} arquivo(s)`}
               </Button>
             </div>
+
+            {uploadMutation.isError && (
+              <div className="text-sm text-red-500 text-center">Ocorreu um erro ao enviar os arquivos. Tente novamente.</div>
+            )}
           </form>
         </CardContent>
       </Card>
