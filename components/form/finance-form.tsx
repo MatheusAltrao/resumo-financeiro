@@ -1,6 +1,8 @@
 "use client";
 import useGenerateFinanceResume from "@/hooks/use-generate-finance-resume";
 import toast from "react-hot-toast";
+import { ChartPieLabel } from "../charts/pie-chart";
+import VerticalBarChart from "../charts/vertica-bar-chart";
 import GenerateResumeLoading from "../loadings/generate-resume-loading";
 import IconLoading from "../loadings/icon-loading";
 import { Button } from "../ui/button";
@@ -65,6 +67,9 @@ export default function FinanceForm() {
           </form>
         </CardContent>
       </Card>
+
+      <VerticalBarChart />
+      <ChartPieLabel />
 
       {formatedData}
     </div>

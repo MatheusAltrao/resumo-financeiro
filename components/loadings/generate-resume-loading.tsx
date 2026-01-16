@@ -17,8 +17,7 @@ export default function GenerateResumeLoading({ loading }: GenerateResumeLoading
       }, 100);
       return () => clearInterval(timer);
     } else if (progress > 0) {
-      // Quando loading fica false, completa até 100%
-      setProgress(100);
+      setProgress(500);
     }
   }, [loading, progress]);
 

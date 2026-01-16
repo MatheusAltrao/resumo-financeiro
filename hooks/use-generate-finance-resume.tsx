@@ -9,7 +9,7 @@ export default function useGenerateFinanceResume() {
   const { data, isError, isPending, error, mutate } = useMutation({
     mutationFn: async (formData: FormData) => generateFinanceResumePrompt(formData),
     onSuccess: (data) => {
-      toast.success(`${files.length} arquivo(s) enviado(s) com sucesso!`);
+      toast.success(`Gerado com sucesso`);
       setFiles([]);
     },
     onError: (error) => {
