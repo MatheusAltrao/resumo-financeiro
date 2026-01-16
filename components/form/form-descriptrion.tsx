@@ -5,7 +5,7 @@ export default function FormDescription() {
       <ol className="list-decimal list-inside space-y-1 text-sm">
         <li>Entre no site ou aplicativo do seu banco</li>
         <li>Procure pela opção "Exportar Extrato" ou "Relatório de Movimentações"</li>
-        <li>Faça o download do arquivo em formato CSV ou PDF</li>
+        <li>Faça o download do arquivo em formato CSV</li>
         <li>Arraste o arquivo aqui ou clique para fazer upload</li>
         <li>Receba uma análise completa dos seus dados financeiros</li>
         <li className="text-red-500">Você só pode enviar apenas 3 arquivos por vez</li>

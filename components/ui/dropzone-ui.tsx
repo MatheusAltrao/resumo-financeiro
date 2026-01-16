@@ -74,6 +74,9 @@ export default function DropzoneUI({ files, setFiles, maxFiles = 3, isPending }:
           filesToAdd.forEach(createPreview);
           setFiles((prev) => [...prev, ...filesToAdd]);
         }}
+        accept={{
+          "text/csv": [".csv"],
+        }}
         disabled={files.length >= maxFiles || isPending}
       >
         {(dropzone: DropzoneState) => (
@@ -86,7 +89,7 @@ export default function DropzoneUI({ files, setFiles, maxFiles = 3, isPending }:
                 {files.length >= maxFiles ? "Limite de arquivos atingido" : "Arraste ou clique aqui para adicionar arquivos"}
               </h2>
               <p className="text-sm text-muted-foreground">
-                Utilize preferencialmente arquivos em formato PDF ou CSV ({files.length}/{maxFiles} arquivos)
+                Utilize arquivos em formato CSV ({files.length}/{maxFiles} arquivos)
               </p>
               {error && <p className="text-sm text-red-500 font-medium mt-2">{error}</p>}
             </div>
