@@ -21,27 +21,27 @@ ATENÇÃO CRÍTICA:
   },
   "incomes": [
     {
-      "data": "YYYY-MM-DD",
-      "origem": "string",
-      "descricao": "string",
-      "valor": number
+      "date": "YYYY-MM-DD",
+      "source": "string",
+      "description": "string",
+      "value": number
     }
   ],
   "expenseDistribution": [
     {
-      "categoria": "string",
-      "valor": number,
-      "percentual": number
+      "category": "string",
+      "value": number,
+      "percentage": number
     }
   ],
   "categoryBreakdown": [
     {
-      "categoria": "string",
+      "category": "string",
       "expenses": [
         {
-          "descricao": "string",
-          "valor": number,
-          "data": "YYYY-MM-DD"
+          "description": "string",
+          "value": number,
+          "date": "YYYY-MM-DD"
         }
       ],
       "total": number
@@ -49,9 +49,9 @@ ATENÇÃO CRÍTICA:
   ],
   "topPixExpenses": [
     {
-      "recebedor": "string",
-      "valor": number,
-      "quantidade": number
+      "receiver": "string",
+      "value": number,
+      "quantity": number
     }
   ],
   "patternAnalysis": [

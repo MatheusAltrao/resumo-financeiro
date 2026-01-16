@@ -18,34 +18,34 @@ export interface GeneralSummary {
 }
 
 export interface Income {
-  data: string;
-  origem: string;
-  descricao: string;
-  valor: number;
+  date: string;
+  source: string;
+  description: string;
+  value: number;
 }
 
 export interface ExpenseDistribution {
-  categoria: string;
-  valor: number;
-  percentual: number;
+  category: string;
+  value: number;
+  percentage: number;
 }
 
 export interface CategorySummary {
-  categoria: string;
+  category: string;
   expenses: ExpenseItem[];
   total: number;
 }
 
 export interface ExpenseItem {
-  descricao: string;
-  valor: number;
-  data?: string;
+  description: string;
+  value: number;
+  date?: string;
 }
 
 export interface TopPixExpense {
-  recebedor: string;
-  valor: number;
-  quantidade: number;
+  receiver: string;
+  value: number;
+  quantity: number;
 }
 
 export interface AnalystAdvice {

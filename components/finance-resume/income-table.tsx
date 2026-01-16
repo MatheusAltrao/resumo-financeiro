@@ -16,14 +16,14 @@ export default function IncomeTable({ data }: IncomeTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const totalRecebido = data.reduce((sum, item) => sum + item.valor, 0);
+  const totalRecebido = data.reduce((sum, item) => sum + item.value, 0);
 
   // Filter data based on search term
   const filteredData = data.filter(
     (item) =>
-      item.origem.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.descricao.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      new Date(item.data).toLocaleDateString("pt-BR").includes(searchTerm)
+      item.source.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      new Date(item.date).toLocaleDateString("pt-BR").includes(searchTerm)
   );
 
   // Paginate data
@@ -66,15 +66,15 @@ export default function IncomeTable({ data }: IncomeTableProps) {
                 <>
                   {paginatedData.map((recebimento, index) => (
                     <TableRow key={index} className="hover:bg-muted/30 transition-colors">
-                      <TableCell className="font-medium">{new Date(recebimento.data).toLocaleDateString("pt-BR")}</TableCell>
-                      <TableCell>{recebimento.origem}</TableCell>
-                      <TableCell className="max-w-md truncate">{recebimento.descricao}</TableCell>
+                      <TableCell className="font-medium">{new Date(recebimento.date).toLocaleDateString("pt-BR")}</TableCell>
+                      <TableCell>{recebimento.source}</TableCell>
+                      <TableCell className="max-w-md truncate">{recebimento.description}</TableCell>
                       <TableCell className="text-right">
                         <span className="inline-block px-2 py-1 bg-emerald-50 text-emerald-700 font-semibold rounded">
                           {new Intl.NumberFormat("pt-BR", {
                             style: "currency",
                             currency: "BRL",
-                          }).format(recebimento.valor)}
+                          }).format(recebimento.value)}
                         </span>
                       </TableCell>
                     </TableRow>

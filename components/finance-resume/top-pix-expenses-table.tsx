@@ -57,7 +57,7 @@ export default function TopPixExpensesTable({ data }: TopPixExpensesTableProps) 
                       {index < 3 ? getMedalEmoji(index) : <User className="h-6 w-6" />}
                     </div>
                     <div className="flex-1">
-                      <p className="font-semibold text-sm leading-tight line-clamp-2">{pix.recebedor}</p>
+                      <p className="font-semibold text-sm leading-tight line-clamp-2">{pix.receiver}</p>
                     </div>
                   </div>
                 </div>
@@ -66,7 +66,7 @@ export default function TopPixExpensesTable({ data }: TopPixExpensesTableProps) 
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-muted-foreground font-medium">Transações</span>
                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-cyan-100 text-cyan-700">
-                      {pix.quantidade}x
+                      {pix.quantity}x
                     </span>
                   </div>
 
@@ -79,7 +79,7 @@ export default function TopPixExpensesTable({ data }: TopPixExpensesTableProps) 
                       {new Intl.NumberFormat("pt-BR", {
                         style: "currency",
                         currency: "BRL",
-                      }).format(pix.valor)}
+                      }).format(pix.value)}
                     </p>
                   </div>
                 </div>

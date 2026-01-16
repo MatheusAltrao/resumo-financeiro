@@ -44,7 +44,7 @@ export default function CategorySummaryTable({ data }: CategorySummaryTableProps
                           <Package className="h-5 w-5" />
                         </div>
                         <div className="text-left">
-                          <h4 className={`font-bold text-base ${colorScheme.text}`}>{categoria.categoria}</h4>
+                          <h4 className={`font-bold text-base ${colorScheme.text}`}>{categoria.category}</h4>
                           <p className="text-xs text-muted-foreground">{categoria.expenses.length} transações</p>
                         </div>
                       </div>
@@ -73,19 +73,19 @@ export default function CategorySummaryTable({ data }: CategorySummaryTableProps
                         </TableHeader>
                         <TableBody>
                           {categoria.expenses
-                            .sort((a, b) => b.valor - a.valor)
+                            .sort((a, b) => b.value - a.value)
                             .map((gasto, gastoIndex) => (
                               <TableRow key={gastoIndex} className="hover:bg-muted/30 transition-colors">
-                                <TableCell className="font-medium">{gasto.descricao}</TableCell>
+                                <TableCell className="font-medium">{gasto.description}</TableCell>
                                 <TableCell className="text-sm text-muted-foreground">
-                                  {gasto.data ? new Date(gasto.data).toLocaleDateString("pt-BR") : "-"}
+                                  {gasto.date ? new Date(gasto.date).toLocaleDateString("pt-BR") : "-"}
                                 </TableCell>
                                 <TableCell className="text-right">
                                   <span className="inline-block px-2 py-1 bg-rose-50 text-rose-700 font-semibold rounded text-sm">
                                     {new Intl.NumberFormat("pt-BR", {
                                       style: "currency",
                                       currency: "BRL",
-                                    }).format(gasto.valor)}
+                                    }).format(gasto.value)}
                                   </span>
                                 </TableCell>
                               </TableRow>
