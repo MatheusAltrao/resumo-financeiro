@@ -12,7 +12,7 @@ interface FinanceResumeDisplayProps {
 
 export default function FinanceResumeDisplay({ data }: FinanceResumeDisplayProps) {
   return (
-    <div className="space-y-6 mt-8">
+    <div className="space-y-8 mt-8">
       {/* Resumo Geral */}
       <SummaryCard data={data.resumoGeral} />
 
@@ -29,7 +29,13 @@ export default function FinanceResumeDisplay({ data }: FinanceResumeDisplayProps
       {data.resumoPorCategoria && data.resumoPorCategoria.length > 0 && <CategorySummaryTable data={data.resumoPorCategoria} />}
 
       {/* Análises e Conselhos */}
-      <AnalysisAdvice padroes={data.analisesPadroes} conselho={data.conselhoAnalista} conclusao={data.conclusao} />
+      <AnalysisAdvice
+        padroes={data.analisesPadroes}
+        conselho={data.conselhoAnalista}
+        conclusao={data.conclusao}
+        saldoFinal={data.resumoGeral.saldoFinal}
+        percentualComprometido={data.resumoGeral.percentualComprometido}
+      />
     </div>
   );
 }
