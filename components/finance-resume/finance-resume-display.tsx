@@ -12,7 +12,7 @@ interface FinanceResumeDisplayProps {
 
 export default function FinanceResumeDisplay({ data }: FinanceResumeDisplayProps) {
   return (
-    <div className="space-y-8 mt-8">
+    <div className="space-y-8 ">
       {/* Resumo Geral */}
       <SummaryCard data={data.generalSummary} />
 

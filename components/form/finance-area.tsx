@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import FinanceResumeDisplay from "../finance-resume/finance-resume-display";
 import FinanceForm from "./finance-form";
+import NewAnalyseButton from "./new-analyse-button";
 
 export default function FinanceArea() {
   const { files, setFiles, data, isError, isPending, mutate } = useGenerateFinanceResume();
@@ -44,8 +45,9 @@ export default function FinanceArea() {
   }, [data]);
 
   return (
-    <div className="w-full pb-20">
+    <div className="w-full pb-20 space-y-8">
       <FinanceForm files={files} financeData={financeData} isError={isError} isPending={isPending} mutate={mutate} setFiles={setFiles} />
+      {financeData && <NewAnalyseButton setFinanceData={setFinanceData} />}
       {financeData && <FinanceResumeDisplay data={financeData} />}
     </div>
   );

@@ -36,7 +36,7 @@ export default function FinanceForm({ files, setFiles, isPending, isError, mutat
   };
 
   return (
-    <>
+    <div className="space-y-8">
       {!financeData && (
         <Card>
           <CardHeader>
@@ -70,6 +70,6 @@ export default function FinanceForm({ files, setFiles, isPending, isError, mutat
       )}
 
       {isPending && <GenerateResumeLoading loading={isPending} />}
-    </>
+    </div>
   );
 }
