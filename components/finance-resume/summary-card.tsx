@@ -1,5 +1,5 @@
 import { GeneralSummary } from "@/types/finance-resume";
-import { ArrowDown, ArrowRight, ArrowUp, DollarSign, TrendingDown, TrendingUp, Wallet } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUp, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 
 interface SummaryCardProps {
@@ -30,10 +30,10 @@ export default function SummaryCard({ data }: SummaryCardProps) {
   };
 
   return (
-    <div className="grid grid-cols-1  lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1  lg:grid-cols-3 gap-4">
       {/* Card de Receitas */}
       <Card className="relative overflow-hidden border-l-4 border-l-emerald-500 bg-linear-to-br from-emerald-50 to-white hover:shadow-lg transition-shadow">
-        <CardContent className="p-6">
+        <CardContent>
           <div className="flex items-start justify-between">
             <div className="space-y-1">
               <p className="text-sm font-medium text-muted-foreground">Total Receitas</p>
@@ -53,7 +53,7 @@ export default function SummaryCard({ data }: SummaryCardProps) {
 
       {/* Card de Despesas */}
       <Card className="relative overflow-hidden border-l-4 border-l-rose-500 bg-linear-to-br from-rose-50 to-white hover:shadow-lg transition-shadow">
-        <CardContent className="p-6">
+        <CardContent>
           <div className="flex items-start justify-between">
             <div className="space-y-1">
               <p className="text-sm font-medium text-muted-foreground">Total Despesas</p>
@@ -77,7 +77,7 @@ export default function SummaryCard({ data }: SummaryCardProps) {
           data.finalBalance >= 0 ? "border-l-cyan-500 bg-linear-to-br from-cyan-50" : "border-l-orange-500 bg-linear-to-br from-orange-50"
         } to-white hover:shadow-lg transition-shadow`}
       >
-        <CardContent className="p-6">
+        <CardContent>
           <div className="flex items-start justify-between">
             <div className="space-y-1">
               <p className="text-sm font-medium text-muted-foreground">Saldo Final</p>
@@ -90,51 +90,6 @@ export default function SummaryCard({ data }: SummaryCardProps) {
             </div>
             <div className={`h-12 w-12 rounded-full ${data.finalBalance >= 0 ? "bg-cyan-100" : "bg-orange-100"} flex items-center justify-center`}>
               <Wallet className={`h-6 w-6 ${data.finalBalance >= 0 ? "text-cyan-600" : "text-orange-600"}`} />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Card de % Comprometido */}
-      <Card
-        className={`relative overflow-hidden border-l-4 ${
-          data.classification === "Positivo"
-            ? "border-l-teal-500 bg-linear-to-br from-teal-50"
-            : data.classification === "Negativo"
-            ? "border-l-amber-500 bg-linear-to-br from-amber-50"
-            : "border-l-yellow-500 bg-linear-to-br from-yellow-50"
-        } to-white hover:shadow-lg transition-shadow`}
-      >
-        <CardContent className="p-6">
-          <div className="flex items-start justify-between">
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-muted-foreground">% Comprometido</p>
-              <div className="flex items-center gap-2">
-                <p className={`text-2xl font-bold ${getClassificacaoColor()}`}>{data.commitmentPercentage.toFixed(1)}%</p>
-                <div className={getClassificacaoColor()}>{getClassificacaoIcon()}</div>
-              </div>
-              <span
-                className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${
-                  data.classification === "Positivo"
-                    ? "bg-emerald-100 text-emerald-700"
-                    : data.classification === "Negativo"
-                    ? "bg-rose-100 text-rose-700"
-                    : "bg-amber-100 text-amber-700"
-                }`}
-              >
-                {data.classification}
-              </span>
-            </div>
-            <div
-              className={`h-12 w-12 rounded-full ${
-                data.classification === "Positivo" ? "bg-teal-100" : data.classification === "Negativo" ? "bg-amber-100" : "bg-yellow-100"
-              } flex items-center justify-center`}
-            >
-              <DollarSign
-                className={`h-6 w-6 ${
-                  data.classification === "Positivo" ? "text-teal-600" : data.classification === "Negativo" ? "text-amber-600" : "text-yellow-600"
-                }`}
-              />
             </div>
           </div>
         </CardContent>

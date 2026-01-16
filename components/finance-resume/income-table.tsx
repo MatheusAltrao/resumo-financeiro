@@ -34,9 +34,9 @@ export default function IncomeTable({ data }: IncomeTableProps) {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 justify-between">
           <CardTitle className="text-xl font-bold">💰 Detalhe de Recebimentos</CardTitle>
-          <div className="relative w-64">
+          <div className="relative w-full lg:w-64">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Buscar recebimentos..."
@@ -45,7 +45,7 @@ export default function IncomeTable({ data }: IncomeTableProps) {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="pl-8"
+              className="pl-8 w-full"
             />
           </div>
         </div>
