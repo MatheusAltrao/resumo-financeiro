@@ -1,6 +1,6 @@
 "use client";
 
-import FinanceForm from "@/components/form/finance-form";
+import FinanceArea from "@/components/form/finance-area";
 import Header from "@/components/header/header";
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              <span className="text-sm font-medium text-primary">Powered by AI</span>
+              <span className="text-sm font-medium text-primary">Resumo Financeiro AI</span>
             </div>
 
             <h1 className="text-4xl lg:text-6xl font-bold text-balance mb-6 text-foreground">
@@ -72,7 +72,7 @@ export default function Home() {
               </div>
             </div>
 
-            <FinanceForm />
+            <FinanceArea />
           </div>
         </section>
       </main>
