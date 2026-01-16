@@ -1,16 +1,19 @@
 "use client";
 import { Trash, Upload } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import Dropzone, { DropzoneState } from "shadcn-dropzone";
 import { Button } from "./button";
 
 interface DropzoneUIProps {
-  onDrop: (acceptedFiles: File[]) => void;
+  files: File[];
+  setFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  maxFiles?: number;
 }
 
-export default function DropzoneUI({ onDrop }: DropzoneUIProps) {
+export default function DropzoneUI({ files, setFiles, maxFiles = 3 }: DropzoneUIProps) {
   const [previews, setPreviews] = useState<{ [key: string]: string }>({});
-  const [files, setFiles] = useState<File[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return "0 Bytes";
@@ -43,10 +46,34 @@ export default function DropzoneUI({ onDrop }: DropzoneUIProps) {
     <>
       <Dropzone
         onDrop={(acceptedFiles: File[]) => {
-          acceptedFiles.forEach(createPreview);
-          setFiles((prev) => [...prev, ...acceptedFiles]);
-          onDrop(acceptedFiles);
+          // Verifica quantos arquivos podem ser adicionados
+          const remainingSlots = maxFiles - files.length;
+
+          if (remainingSlots <= 0) {
+            const errorMsg = "Você só pode adicionar três itens";
+            setError(errorMsg);
+            toast.error(errorMsg);
+            setTimeout(() => setError(null), 3000);
+            return;
+          }
+
+          // Se tentar adicionar mais arquivos do que o permitido, pega apenas os primeiros
+          const filesToAdd = acceptedFiles.slice(0, remainingSlots);
+          const rejected = acceptedFiles.length - filesToAdd.length;
+
+          if (rejected > 0) {
+            const errorMsg = "Você só pode adicionar três itens";
+            setError(errorMsg);
+            toast.error(errorMsg);
+            setTimeout(() => setError(null), 3000);
+          } else {
+            setError(null);
+          }
+
+          filesToAdd.forEach(createPreview);
+          setFiles((prev) => [...prev, ...filesToAdd]);
         }}
+        disabled={files.length >= maxFiles}
       >
         {(dropzone: DropzoneState) => (
           <div className="flex items-center flex-col gap-1.5 h-75 border-dashed justify-center rounded-lg">
@@ -54,8 +81,13 @@ export default function DropzoneUI({ onDrop }: DropzoneUIProps) {
               <Upload className="h-8 w-8 text-primary" />
             </div>
             <div className="text-center">
-              <h2 className="font-medium">Arraste ou clique aqui para adicionar arquivos</h2>
-              <p className="text-sm text-muted-foreground">Utilize preferencialmente arquivos em formato PDF ou CSV</p>
+              <h2 className="font-medium">
+                {files.length >= maxFiles ? "Limite de arquivos atingido" : "Arraste ou clique aqui para adicionar arquivos"}
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Utilize preferencialmente arquivos em formato PDF ou CSV ({files.length}/{maxFiles} arquivos)
+              </p>
+              {error && <p className="text-sm text-red-500 font-medium mt-2">{error}</p>}
             </div>
           </div>
         )}
@@ -79,8 +111,8 @@ export default function DropzoneUI({ onDrop }: DropzoneUIProps) {
                 </p>
               </div>
 
-              <Button variant={"destructive"} onClick={() => handleDeleteFile(file)}>
-                <Trash />
+              <Button variant={"destructive"} size="icon" onClick={() => handleDeleteFile(file)} type="button">
+                <Trash className="h-4 w-4" />
               </Button>
             </li>
           ))}

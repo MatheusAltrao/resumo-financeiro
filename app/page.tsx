@@ -1,7 +1,7 @@
 "use client";
 
+import FinanceForm from "@/components/form/finance-form";
 import Header from "@/components/header/header";
-import DropzoneUI from "@/components/ui/dropzone-ui";
 
 export default function Home() {
   return (
@@ -72,9 +72,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="w-full pb-20">
-              <DropzoneUI onDrop={() => {}} />
-            </div>
+            <FinanceForm />
           </div>
         </section>
       </main>
