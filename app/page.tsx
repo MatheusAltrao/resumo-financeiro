@@ -1,7 +1,7 @@
 "use client";
 
+import Header from "@/components/header/header";
 import DropzoneUI from "@/components/ui/dropzone-ui";
-import Header from "@/components/ui/header";
 
 export default function Home() {
   return (

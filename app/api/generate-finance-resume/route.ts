@@ -12,7 +12,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Prompt is required" });
   }
 
-  try {
+  console.log("Prompt received:", prompt);
+
+  /* try {
     const response = await openai.chat.completions.create({
       model: "gpt-4.1",
       messages: [
@@ -33,5 +35,5 @@ export async function POST(request: Request) {
     return NextResponse.json(content ? content.trim() : "");
   } catch (error) {
     return NextResponse.json({ error: "Failed to generate response" + error });
-  }
+  } */
 }
