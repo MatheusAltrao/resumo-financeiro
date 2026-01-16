@@ -1,7 +1,8 @@
 "use client";
 import useGenerateFinanceResume from "@/hooks/use-generate-finance-resume";
 import toast from "react-hot-toast";
-import LoadingIcon from "../loadings/loading-icon";
+import GenerateResumeLoading from "../loadings/generate-resume-loading";
+import IconLoading from "../loadings/icon-loading";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import DropzoneUI from "../ui/dropzone-ui";
@@ -30,6 +31,8 @@ export default function FinanceForm() {
   console.log("Response data:", data);
   console.log("Error data:", error);
 
+  const formatedData = data?.result;
+
   return (
     <div className="w-full pb-20">
       <Card>
@@ -41,17 +44,20 @@ export default function FinanceForm() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label>Documentos</Label>
-              <DropzoneUI files={files} setFiles={setFiles} />
-            </div>
+            {!isPending && (
+              <div className="space-y-2">
+                <Label>Documentos</Label>
+                <DropzoneUI files={files} setFiles={setFiles} />
+              </div>
+            )}
+            {isPending && <GenerateResumeLoading loading={isPending} />}
 
             <div className="flex justify-end gap-3">
               <Button type="button" variant="outline" onClick={() => setFiles([])} disabled={files.length === 0 || isPending}>
                 Limpar Tudo
               </Button>
               <Button type="submit" disabled={files.length === 0 || isPending}>
-                {isPending ? <LoadingIcon text="Enviando..." /> : `Enviar ${files.length} arquivo(s)`}
+                {isPending ? <IconLoading text="Enviando..." /> : `Enviar ${files.length} arquivo(s)`}
               </Button>
             </div>
 
@@ -59,6 +65,8 @@ export default function FinanceForm() {
           </form>
         </CardContent>
       </Card>
+
+      {formatedData}
     </div>
   );
 }
