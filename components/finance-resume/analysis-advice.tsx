@@ -42,7 +42,6 @@ export default function AnalysisAdvice({ padroes, conselho, conclusao, saldoFina
   const scoreColor = healthScore >= 70 ? "text-emerald-600" : healthScore >= 40 ? "text-amber-600" : "text-rose-600";
   const scoreLabel = healthScore >= 70 ? "Saudável" : healthScore >= 40 ? "Atenção" : "Crítico";
   const scoreBgColor = healthScore >= 70 ? "from-emerald-50 to-teal-50" : healthScore >= 40 ? "from-amber-50 to-yellow-50" : "from-rose-50 to-red-50";
-
   const borderColor = healthScore >= 70 ? "border-emerald-400" : healthScore >= 40 ? "border-amber-400" : "border-rose-400";
 
   return (
