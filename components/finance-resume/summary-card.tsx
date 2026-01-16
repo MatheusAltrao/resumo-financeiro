@@ -1,5 +1,5 @@
 import { GeneralSummary } from "@/types/finance-resume";
-import { ArrowDown, ArrowRight, ArrowUp, TrendingDown, TrendingUp, Wallet } from "lucide-react";
+import { TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 
 interface SummaryCardProps {
@@ -7,28 +7,6 @@ interface SummaryCardProps {
 }
 
 export default function SummaryCard({ data }: SummaryCardProps) {
-  const getClassificacaoColor = () => {
-    switch (data.classification) {
-      case "Positivo":
-        return "text-emerald-600";
-      case "Negativo":
-        return "text-rose-600";
-      default:
-        return "text-amber-600";
-    }
-  };
-
-  const getClassificacaoIcon = () => {
-    switch (data.classification) {
-      case "Positivo":
-        return <ArrowUp className="h-5 w-5" />;
-      case "Negativo":
-        return <ArrowDown className="h-5 w-5" />;
-      default:
-        return <ArrowRight className="h-5 w-5" />;
-    }
-  };
-
   return (
     <div className="grid grid-cols-1  lg:grid-cols-3 gap-4">
       {/* Card de Receitas */}
