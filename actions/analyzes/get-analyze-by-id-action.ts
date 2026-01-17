@@ -3,7 +3,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export default async function getAnalyzeByIdAction(analyzeId: string) {
+export async function getAnalyzeByIdAction(analyzeId: string) {
   const session = await auth();
 
   if (!session || !session.user) {

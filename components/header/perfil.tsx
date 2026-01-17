@@ -1,6 +1,7 @@
 import { signOutAction } from "@/actions/auth/sign-out-action";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { auth } from "@/lib/auth";
+import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import CreditQuantityCard from "./credit-quantity-card";
@@ -32,7 +33,9 @@ export default async function Perfil() {
                   <DropdownMenuSeparator />
                 </div>
 
-                <DropdownMenuItem>Outras Análises</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/analyzes">Ver todas as análizes</Link>{" "}
+                </DropdownMenuItem>
                 <DropdownMenuItem>Comprar Créditos</DropdownMenuItem>
                 <form action={signOutAction}>
                   <Button variant={"destructive"} className="w-full h-8 justify-start" type="submit">

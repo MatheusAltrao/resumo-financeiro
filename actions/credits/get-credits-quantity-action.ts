@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export default async function getCreditsQuantityAction() {
+export async function getCreditsQuantityAction() {
   const session = await auth();
 
   if (!session || !session.user) {

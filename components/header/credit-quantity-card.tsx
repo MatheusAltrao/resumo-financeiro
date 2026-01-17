@@ -1,4 +1,4 @@
-import getCreditsQuantityAction from "@/actions/credits/get-credits-quantity-action";
+import { getCreditsQuantityAction } from "@/actions/credits/get-credits-quantity-action";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Sparkles } from "lucide-react";
 

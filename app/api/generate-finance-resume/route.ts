@@ -1,5 +1,5 @@
-import createAnalyzeAction from "@/actions/analyzes/create-analyze-action";
-import subtractACredit from "@/actions/credits/subtract-a-credit-action";
+import { createAnalyzeAction } from "@/actions/analyzes/create-analyze-action";
+import { subtractACredit } from "@/actions/credits/subtract-a-credit-action";
 import { PRE_PROMPT_OPEN_AI } from "@/consts/open-ai-config";
 import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
@@ -60,7 +60,7 @@ export async function POST(request: Request) {
     const content = response.choices[0].message.content;
 
     if (content) {
-      const analyze = await createAnalyzeAction(content.trim());
+      await createAnalyzeAction(content.trim());
     }
 
     return NextResponse.json({

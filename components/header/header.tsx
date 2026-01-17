@@ -1,4 +1,5 @@
 import { DollarSign } from "lucide-react";
+import Link from "next/link";
 import Perfil from "./perfil";
 
 export default function Header() {
@@ -9,7 +10,9 @@ export default function Header() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
             <DollarSign className="h-5 w-5 text-primary-foreground" />
           </div>
-          <span className="lg:text-lg font-medium  text-foreground">Resumo Financeiro AI</span>
+          <Link href="/">
+            <span className="lg:text-lg font-medium  text-foreground">Resumo Financeiro AI</span>
+          </Link>
         </div>
 
         <Perfil />

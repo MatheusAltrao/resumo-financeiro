@@ -2,9 +2,9 @@
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import getCreditsQuantityAction from "./get-credits-quantity-action";
+import { getCreditsQuantityAction } from "./get-credits-quantity-action";
 
-export default async function subtractACredit() {
+export async function subtractACredit() {
   const session = await auth();
 
   if (!session || !session.user) {
