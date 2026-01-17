@@ -42,3 +42,8 @@ export type VerificationToken = Prisma.VerificationTokenModel
  * 
  */
 export type Authenticator = Prisma.AuthenticatorModel
+/**
+ * Model Analyze
+ * 
+ */
+export type Analyze = Prisma.AnalyzeModel

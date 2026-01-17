@@ -1,3 +1,4 @@
+import createAnalyzeAction from "@/actions/analyzes/create-analyze-action";
 import subtractACredit from "@/actions/credits/subtract-a-credit-action";
 import { PRE_PROMPT_OPEN_AI } from "@/consts/open-ai-config";
 import { auth } from "@/lib/auth";
@@ -25,6 +26,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Nenhum arquivo foi enviado" }, { status: 400 });
     }
 
+    console.log("📁 Arquivos recebidos:", files.length);
+
     const fileContents = await Promise.all(
       files.map(async (file) => {
         const text = await file.text();
@@ -39,6 +42,8 @@ export async function POST(request: Request) {
     const prompt = `Analise os seguintes documentos financeiros e forneça um resumo:\n\n${fileContents
       .map((f) => `Arquivo: ${f.name}\n${f.content}`)
       .join("\n\n")}`;
+
+    console.log("🤖 Chamando OpenAI...");
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -58,12 +63,20 @@ export async function POST(request: Request) {
 
     const content = response.choices[0].message.content;
 
+    console.log("✅ Resposta recebida da OpenAI:", content ? "Sim" : "Não");
+
+    if (content) {
+      console.log("💾 Salvando análise no banco...");
+      const analyze = await createAnalyzeAction(content.trim());
+      console.log("✅ Análise salva com ID:", analyze.id);
+    }
+
     return NextResponse.json({
       result: content ? content.trim() : "",
       filesProcessed: files.length,
     });
   } catch (error) {
-    console.error("Erro ao processar:", error);
+    console.error("❌ Erro ao processar:", error);
     return NextResponse.json({ error: "Failed to generate response: " + error }, { status: 500 });
   }
 }

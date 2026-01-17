@@ -16,6 +16,7 @@ model User {
   credits       Int             @default(1)
   accounts      Account[]
   sessions      Session[]
+  analyzes      Analyze[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
@@ -76,4 +77,17 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
+}
+
+model Analyze {
+  id         String @id @default(cuid())
+  userId     String
+  resumeData String @db.Text
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }

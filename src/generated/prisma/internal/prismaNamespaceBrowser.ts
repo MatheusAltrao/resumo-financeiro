@@ -55,7 +55,8 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
-  Authenticator: 'Authenticator'
+  Authenticator: 'Authenticator',
+  Analyze: 'Analyze'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -139,6 +140,17 @@ export const AuthenticatorScalarFieldEnum = {
 } as const
 
 export type AuthenticatorScalarFieldEnum = (typeof AuthenticatorScalarFieldEnum)[keyof typeof AuthenticatorScalarFieldEnum]
+
+
+export const AnalyzeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  resumeData: 'resumeData',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AnalyzeScalarFieldEnum = (typeof AnalyzeScalarFieldEnum)[keyof typeof AnalyzeScalarFieldEnum]
 
 
 export const SortOrder = {

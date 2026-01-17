@@ -11,18 +11,24 @@ export default function useGenerateFinanceResume() {
   const { data, isError, isPending, error, mutate } = useMutation({
     mutationFn: async (formData: FormData) => generateFinanceResumePrompt(formData),
     onSuccess: (data) => {
+      console.log("📥 Resposta recebida:", data);
+
       if (data.error) {
+        console.error("❌ Erro na resposta:", data.error);
         if (data.error.includes("crédito do usuário")) {
           return toast.error("Usuário sem créditos suficientes. Por favor, adquira mais créditos para continuar utilizando o serviço.");
         }
+        return toast.error("Erro ao processar requisição");
       }
+
+      console.log("✅ Sucesso! Arquivos processados:", data.filesProcessed);
       toast.success(`Gerado com sucesso`);
       setFiles([]);
       router.refresh();
     },
     onError: (error) => {
+      console.error("❌ Erro no envio:", error);
       toast.error("Erro ao enviar os arquivos. Tente novamente.");
-      console.error("Erro no envio:", error);
     },
   });
 

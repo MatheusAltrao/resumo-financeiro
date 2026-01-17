@@ -388,7 +388,8 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
-  Authenticator: 'Authenticator'
+  Authenticator: 'Authenticator',
+  Analyze: 'Analyze'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "authenticator"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "authenticator" | "analyze"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +779,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Analyze: {
+      payload: Prisma.$AnalyzePayload<ExtArgs>
+      fields: Prisma.AnalyzeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AnalyzeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyzePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AnalyzeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyzePayload>
+        }
+        findFirst: {
+          args: Prisma.AnalyzeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyzePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AnalyzeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyzePayload>
+        }
+        findMany: {
+          args: Prisma.AnalyzeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyzePayload>[]
+        }
+        create: {
+          args: Prisma.AnalyzeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyzePayload>
+        }
+        createMany: {
+          args: Prisma.AnalyzeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AnalyzeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyzePayload>[]
+        }
+        delete: {
+          args: Prisma.AnalyzeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyzePayload>
+        }
+        update: {
+          args: Prisma.AnalyzeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyzePayload>
+        }
+        deleteMany: {
+          args: Prisma.AnalyzeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AnalyzeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AnalyzeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyzePayload>[]
+        }
+        upsert: {
+          args: Prisma.AnalyzeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyzePayload>
+        }
+        aggregate: {
+          args: Prisma.AnalyzeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAnalyze>
+        }
+        groupBy: {
+          args: Prisma.AnalyzeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AnalyzeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AnalyzeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AnalyzeCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -882,6 +957,17 @@ export const AuthenticatorScalarFieldEnum = {
 } as const
 
 export type AuthenticatorScalarFieldEnum = (typeof AuthenticatorScalarFieldEnum)[keyof typeof AuthenticatorScalarFieldEnum]
+
+
+export const AnalyzeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  resumeData: 'resumeData',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AnalyzeScalarFieldEnum = (typeof AnalyzeScalarFieldEnum)[keyof typeof AnalyzeScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1076,6 +1162,7 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   verificationToken?: Prisma.VerificationTokenOmit
   authenticator?: Prisma.AuthenticatorOmit
+  analyze?: Prisma.AnalyzeOmit
 }
 
 /* Types for Logging */
