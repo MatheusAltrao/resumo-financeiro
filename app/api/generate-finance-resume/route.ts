@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     apiKey: process.env.OPENAI_API_KEY as string,
   });
 
-  //verificar se esta logado
+  // verificar se esta logado
   // verificar se tem créditos
 
   try {
