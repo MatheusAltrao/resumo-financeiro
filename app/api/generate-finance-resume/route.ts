@@ -26,8 +26,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Nenhum arquivo foi enviado" }, { status: 400 });
     }
 
-    console.log("📁 Arquivos recebidos:", files.length);
-
     const fileContents = await Promise.all(
       files.map(async (file) => {
         const text = await file.text();
@@ -36,14 +34,12 @@ export async function POST(request: Request) {
           type: file.type,
           content: text,
         };
-      })
+      }),
     );
 
     const prompt = `Analise os seguintes documentos financeiros e forneça um resumo:\n\n${fileContents
       .map((f) => `Arquivo: ${f.name}\n${f.content}`)
       .join("\n\n")}`;
-
-    console.log("🤖 Chamando OpenAI...");
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -63,12 +59,8 @@ export async function POST(request: Request) {
 
     const content = response.choices[0].message.content;
 
-    console.log("✅ Resposta recebida da OpenAI:", content ? "Sim" : "Não");
-
     if (content) {
-      console.log("💾 Salvando análise no banco...");
       const analyze = await createAnalyzeAction(content.trim());
-      console.log("✅ Análise salva com ID:", analyze.id);
     }
 
     return NextResponse.json({
