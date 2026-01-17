@@ -21,7 +21,7 @@ export default function ButtonsActionForm({ files, isPending, credits }: Buttons
   return (
     <div className="flex flex-col gap-2 w-full">
       <Button type="submit" disabled={files.length === 0 || isPending}>
-        {isPending ? <IconLoading text="Enviando..." /> : `Enviar ${files.length} arquivo(s)`}
+        {isPending ? <IconLoading text="Analisando..." /> : `Enviar ${files.length} arquivo(s)`}
       </Button>
     </div>
   );

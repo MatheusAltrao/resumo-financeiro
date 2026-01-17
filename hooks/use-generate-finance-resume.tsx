@@ -9,6 +9,11 @@ export default function useGenerateFinanceResume() {
   const { data, isError, isPending, error, mutate } = useMutation({
     mutationFn: async (formData: FormData) => generateFinanceResumePrompt(formData),
     onSuccess: (data) => {
+      if (data.error) {
+        if (data.error.includes("crédito do usuário")) {
+          return toast.error("Usuário sem créditos suficientes. Por favor, adquira mais créditos para continuar utilizando o serviço.");
+        }
+      }
       toast.success(`Gerado com sucesso`);
       setFiles([]);
     },

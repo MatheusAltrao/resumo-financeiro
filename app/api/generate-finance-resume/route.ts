@@ -25,8 +25,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Nenhum arquivo foi enviado" }, { status: 400 });
     }
 
-    // Aqui você pode processar os arquivos
-    // Por exemplo, ler o conteúdo, converter, etc.
     const fileContents = await Promise.all(
       files.map(async (file) => {
         const text = await file.text();
@@ -38,7 +36,6 @@ export async function POST(request: Request) {
       })
     );
 
-    // Criar o prompt com base nos arquivos
     const prompt = `Analise os seguintes documentos financeiros e forneça um resumo:\n\n${fileContents
       .map((f) => `Arquivo: ${f.name}\n${f.content}`)
       .join("\n\n")}`;
@@ -60,6 +57,7 @@ export async function POST(request: Request) {
     });
 
     const content = response.choices[0].message.content;
+
     return NextResponse.json({
       result: content ? content.trim() : "",
       filesProcessed: files.length,
