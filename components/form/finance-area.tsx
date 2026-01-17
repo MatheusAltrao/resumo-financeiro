@@ -7,7 +7,11 @@ import FinanceResumeDisplay from "../finance-resume/finance-resume-display";
 import FinanceForm from "./finance-form";
 import NewAnalyseButton from "./new-analyse-button";
 
-export default function FinanceArea() {
+interface FinanceAreaProps {
+  credits: number;
+}
+
+export default function FinanceArea({ credits }: FinanceAreaProps) {
   const { files, setFiles, data, isError, isPending, mutate } = useGenerateFinanceResume();
   const [financeData, setFinanceData] = useState<FinanceResume | null>(null);
 
@@ -46,7 +50,15 @@ export default function FinanceArea() {
 
   return (
     <div className="space-y-8">
-      <FinanceForm files={files} financeData={financeData} isError={isError} isPending={isPending} mutate={mutate} setFiles={setFiles} />
+      <FinanceForm
+        files={files}
+        financeData={financeData}
+        isError={isError}
+        isPending={isPending}
+        mutate={mutate}
+        setFiles={setFiles}
+        credits={credits}
+      />
       {financeData && <NewAnalyseButton setFinanceData={setFinanceData} />}
       {financeData && <FinanceResumeDisplay data={financeData} />}
     </div>

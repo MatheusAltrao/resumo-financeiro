@@ -1,3 +1,4 @@
+import getCreditsQuantityAction from "@/actions/credits/get-credits-quantity-action";
 import FinanceArea from "@/components/form/finance-area";
 import FinanceFormFake from "@/components/form/finance-form-fake";
 import Header from "@/components/header/header";
@@ -6,6 +7,9 @@ import { auth } from "@/lib/auth";
 export default async function Home() {
   const session = await auth();
   const hasSession = session && session.user;
+
+  const credits = await getCreditsQuantityAction();
+
   return (
     <div className="w-full min-h-screen space-y-12 ">
       <Header />
@@ -75,7 +79,7 @@ export default async function Home() {
             </div>
 
             <div className="pb-20">
-              {hasSession && <FinanceArea />}
+              {hasSession && <FinanceArea credits={credits} />}
               {!hasSession && <FinanceFormFake />}
             </div>
           </div>

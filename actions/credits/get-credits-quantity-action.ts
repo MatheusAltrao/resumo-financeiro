@@ -7,7 +7,7 @@ export default async function getCreditsQuantityAction() {
   const session = await auth();
 
   if (!session || !session.user) {
-    throw new Error("Usuário não autenticado");
+    return 0;
   }
 
   const userId = session.user.id;
