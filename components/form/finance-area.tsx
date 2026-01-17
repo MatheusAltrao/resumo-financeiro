@@ -45,7 +45,7 @@ export default function FinanceArea() {
   }, [data]);
 
   return (
-    <div className="w-full pb-20 space-y-8">
+    <div className="space-y-8">
       <FinanceForm files={files} financeData={financeData} isError={isError} isPending={isPending} mutate={mutate} setFiles={setFiles} />
       {financeData && <NewAnalyseButton setFinanceData={setFinanceData} />}
       {financeData && <FinanceResumeDisplay data={financeData} />}

@@ -1,13 +1,17 @@
 import FinanceArea from "@/components/form/finance-area";
+import FinanceFormFake from "@/components/form/finance-form-fake";
 import Header from "@/components/header/header";
+import { auth } from "@/lib/auth";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+  const hasSession = session && session.user;
   return (
     <div className="w-full min-h-screen space-y-12 ">
       <Header />
 
       <div className="mx-auto max-w-300 p-2">
-        <main>
+        <main className="space-y-8">
           <div className="text-center space-y-20  ">
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
               <span className="relative flex h-2 w-2">
@@ -70,7 +74,10 @@ export default function Home() {
               </div>
             </div>
 
-            <FinanceArea />
+            <div className="pb-20">
+              {hasSession && <FinanceArea />}
+              {!hasSession && <FinanceFormFake />}
+            </div>
           </div>
         </main>
       </div>

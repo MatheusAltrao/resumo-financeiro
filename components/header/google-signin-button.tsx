@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 export default function GoogleSigninButton() {
   return (
     <form action={signInAction}>
-      <Button type="submit" className="gap-2" variant={"outline"}>
+      <Button type="submit" className="gap-2 w-full" variant={"outline"}>
         <svg className="h-5 w-5" viewBox="0 0 24 24">
           <path
             fill="currentColor"
