@@ -38,7 +38,7 @@ export default async function Perfil() {
                 </DropdownMenuItem>
                 <DropdownMenuItem>Comprar Créditos</DropdownMenuItem>
                 <form action={signOutAction}>
-                  <Button variant={"destructive"} className="w-full h-8 justify-start" type="submit">
+                  <Button variant={"destructive"} className="w-full h-8 mt-1 justify-start" type="submit">
                     Sair
                   </Button>
                 </form>

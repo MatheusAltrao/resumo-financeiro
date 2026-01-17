@@ -6,7 +6,7 @@ export default async function AnalyzesPage() {
   const hasNoAnalyzes = analyzes.length === 0;
   return (
     <div className="mx-auto max-w-300 p-2">
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {analyzes.map((analyze) => (
           <div
             key={analyze.id}
