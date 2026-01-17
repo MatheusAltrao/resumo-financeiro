@@ -1,10 +1,12 @@
 import generateFinanceResumePrompt from "@/http";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function useGenerateFinanceResume() {
   const [files, setFiles] = useState<File[]>([]);
+  const router = useRouter();
 
   const { data, isError, isPending, error, mutate } = useMutation({
     mutationFn: async (formData: FormData) => generateFinanceResumePrompt(formData),
@@ -16,6 +18,7 @@ export default function useGenerateFinanceResume() {
       }
       toast.success(`Gerado com sucesso`);
       setFiles([]);
+      router.refresh();
     },
     onError: (error) => {
       toast.error("Erro ao enviar os arquivos. Tente novamente.");

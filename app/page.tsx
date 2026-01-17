@@ -4,6 +4,8 @@ import FinanceFormFake from "@/components/form/finance-form-fake";
 import Header from "@/components/header/header";
 import { auth } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const session = await auth();
   const hasSession = session && session.user;
