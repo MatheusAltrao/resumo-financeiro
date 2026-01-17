@@ -52,7 +52,7 @@ export default function FinanceForm({ files, setFiles, isPending, isError, mutat
                 <DropzoneUI files={files} setFiles={setFiles} isPending={isPending} />
               </div>
 
-              {!financeData && <ButtonsActionForm files={files} setFiles={setFiles} isPending={isPending} credits={credits} />}
+              {!financeData && <ButtonsActionForm files={files} isPending={isPending} credits={credits} />}
 
               {isError && <div className="text-sm text-red-500 text-center">Ocorreu um erro ao enviar os arquivos. Tente novamente.</div>}
             </form>

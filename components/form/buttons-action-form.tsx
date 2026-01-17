@@ -3,12 +3,11 @@ import { Button } from "../ui/button";
 
 interface ButtonsActionFormProps {
   files: File[];
-  setFiles: React.Dispatch<React.SetStateAction<File[]>>;
   isPending: boolean;
   credits: number;
 }
 
-export default function ButtonsActionForm({ files, setFiles, isPending, credits }: ButtonsActionFormProps) {
+export default function ButtonsActionForm({ files, isPending, credits }: ButtonsActionFormProps) {
   const hasNoCredits = credits <= 0;
 
   if (hasNoCredits) {
