@@ -962,6 +962,8 @@ export type AuthenticatorScalarFieldEnum = (typeof AuthenticatorScalarFieldEnum)
 export const AnalyzeScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  title: 'title',
+  description: 'description',
   resumeData: 'resumeData',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

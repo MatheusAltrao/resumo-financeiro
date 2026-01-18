@@ -80,9 +80,11 @@ model Authenticator {
 }
 
 model Analyze {
-  id         String @id @default(cuid())
-  userId     String
-  resumeData String @db.Text
+  id          String @id @default(cuid())
+  userId      String
+  title       String
+  description String
+  resumeData  String @db.Text
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

@@ -27,6 +27,8 @@ export type AggregateAnalyze = {
 export type AnalyzeMinAggregateOutputType = {
   id: string | null
   userId: string | null
+  title: string | null
+  description: string | null
   resumeData: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -35,6 +37,8 @@ export type AnalyzeMinAggregateOutputType = {
 export type AnalyzeMaxAggregateOutputType = {
   id: string | null
   userId: string | null
+  title: string | null
+  description: string | null
   resumeData: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -43,6 +47,8 @@ export type AnalyzeMaxAggregateOutputType = {
 export type AnalyzeCountAggregateOutputType = {
   id: number
   userId: number
+  title: number
+  description: number
   resumeData: number
   createdAt: number
   updatedAt: number
@@ -53,6 +59,8 @@ export type AnalyzeCountAggregateOutputType = {
 export type AnalyzeMinAggregateInputType = {
   id?: true
   userId?: true
+  title?: true
+  description?: true
   resumeData?: true
   createdAt?: true
   updatedAt?: true
@@ -61,6 +69,8 @@ export type AnalyzeMinAggregateInputType = {
 export type AnalyzeMaxAggregateInputType = {
   id?: true
   userId?: true
+  title?: true
+  description?: true
   resumeData?: true
   createdAt?: true
   updatedAt?: true
@@ -69,6 +79,8 @@ export type AnalyzeMaxAggregateInputType = {
 export type AnalyzeCountAggregateInputType = {
   id?: true
   userId?: true
+  title?: true
+  description?: true
   resumeData?: true
   createdAt?: true
   updatedAt?: true
@@ -150,6 +162,8 @@ export type AnalyzeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type AnalyzeGroupByOutputType = {
   id: string
   userId: string
+  title: string
+  description: string
   resumeData: string
   createdAt: Date
   updatedAt: Date
@@ -179,6 +193,8 @@ export type AnalyzeWhereInput = {
   NOT?: Prisma.AnalyzeWhereInput | Prisma.AnalyzeWhereInput[]
   id?: Prisma.StringFilter<"Analyze"> | string
   userId?: Prisma.StringFilter<"Analyze"> | string
+  title?: Prisma.StringFilter<"Analyze"> | string
+  description?: Prisma.StringFilter<"Analyze"> | string
   resumeData?: Prisma.StringFilter<"Analyze"> | string
   createdAt?: Prisma.DateTimeFilter<"Analyze"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Analyze"> | Date | string
@@ -188,6 +204,8 @@ export type AnalyzeWhereInput = {
 export type AnalyzeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   resumeData?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -200,6 +218,8 @@ export type AnalyzeWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AnalyzeWhereInput[]
   NOT?: Prisma.AnalyzeWhereInput | Prisma.AnalyzeWhereInput[]
   userId?: Prisma.StringFilter<"Analyze"> | string
+  title?: Prisma.StringFilter<"Analyze"> | string
+  description?: Prisma.StringFilter<"Analyze"> | string
   resumeData?: Prisma.StringFilter<"Analyze"> | string
   createdAt?: Prisma.DateTimeFilter<"Analyze"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Analyze"> | Date | string
@@ -209,6 +229,8 @@ export type AnalyzeWhereUniqueInput = Prisma.AtLeast<{
 export type AnalyzeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   resumeData?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -223,6 +245,8 @@ export type AnalyzeScalarWhereWithAggregatesInput = {
   NOT?: Prisma.AnalyzeScalarWhereWithAggregatesInput | Prisma.AnalyzeScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Analyze"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Analyze"> | string
+  title?: Prisma.StringWithAggregatesFilter<"Analyze"> | string
+  description?: Prisma.StringWithAggregatesFilter<"Analyze"> | string
   resumeData?: Prisma.StringWithAggregatesFilter<"Analyze"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Analyze"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Analyze"> | Date | string
@@ -230,6 +254,8 @@ export type AnalyzeScalarWhereWithAggregatesInput = {
 
 export type AnalyzeCreateInput = {
   id?: string
+  title: string
+  description: string
   resumeData: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -239,6 +265,8 @@ export type AnalyzeCreateInput = {
 export type AnalyzeUncheckedCreateInput = {
   id?: string
   userId: string
+  title: string
+  description: string
   resumeData: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -246,6 +274,8 @@ export type AnalyzeUncheckedCreateInput = {
 
 export type AnalyzeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   resumeData?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -255,6 +285,8 @@ export type AnalyzeUpdateInput = {
 export type AnalyzeUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   resumeData?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -263,6 +295,8 @@ export type AnalyzeUncheckedUpdateInput = {
 export type AnalyzeCreateManyInput = {
   id?: string
   userId: string
+  title: string
+  description: string
   resumeData: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -270,6 +304,8 @@ export type AnalyzeCreateManyInput = {
 
 export type AnalyzeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   resumeData?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -278,6 +314,8 @@ export type AnalyzeUpdateManyMutationInput = {
 export type AnalyzeUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   resumeData?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -296,6 +334,8 @@ export type AnalyzeOrderByRelationAggregateInput = {
 export type AnalyzeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   resumeData?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -304,6 +344,8 @@ export type AnalyzeCountOrderByAggregateInput = {
 export type AnalyzeMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   resumeData?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -312,6 +354,8 @@ export type AnalyzeMaxOrderByAggregateInput = {
 export type AnalyzeMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   resumeData?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -361,6 +405,8 @@ export type AnalyzeUncheckedUpdateManyWithoutUserNestedInput = {
 
 export type AnalyzeCreateWithoutUserInput = {
   id?: string
+  title: string
+  description: string
   resumeData: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -368,6 +414,8 @@ export type AnalyzeCreateWithoutUserInput = {
 
 export type AnalyzeUncheckedCreateWithoutUserInput = {
   id?: string
+  title: string
+  description: string
   resumeData: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -405,6 +453,8 @@ export type AnalyzeScalarWhereInput = {
   NOT?: Prisma.AnalyzeScalarWhereInput | Prisma.AnalyzeScalarWhereInput[]
   id?: Prisma.StringFilter<"Analyze"> | string
   userId?: Prisma.StringFilter<"Analyze"> | string
+  title?: Prisma.StringFilter<"Analyze"> | string
+  description?: Prisma.StringFilter<"Analyze"> | string
   resumeData?: Prisma.StringFilter<"Analyze"> | string
   createdAt?: Prisma.DateTimeFilter<"Analyze"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Analyze"> | Date | string
@@ -412,6 +462,8 @@ export type AnalyzeScalarWhereInput = {
 
 export type AnalyzeCreateManyUserInput = {
   id?: string
+  title: string
+  description: string
   resumeData: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -419,6 +471,8 @@ export type AnalyzeCreateManyUserInput = {
 
 export type AnalyzeUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   resumeData?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -426,6 +480,8 @@ export type AnalyzeUpdateWithoutUserInput = {
 
 export type AnalyzeUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   resumeData?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -433,6 +489,8 @@ export type AnalyzeUncheckedUpdateWithoutUserInput = {
 
 export type AnalyzeUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   resumeData?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -443,6 +501,8 @@ export type AnalyzeUncheckedUpdateManyWithoutUserInput = {
 export type AnalyzeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  title?: boolean
+  description?: boolean
   resumeData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -452,6 +512,8 @@ export type AnalyzeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type AnalyzeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  title?: boolean
+  description?: boolean
   resumeData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -461,6 +523,8 @@ export type AnalyzeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type AnalyzeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  title?: boolean
+  description?: boolean
   resumeData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -470,12 +534,14 @@ export type AnalyzeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type AnalyzeSelectScalar = {
   id?: boolean
   userId?: boolean
+  title?: boolean
+  description?: boolean
   resumeData?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AnalyzeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "resumeData" | "createdAt" | "updatedAt", ExtArgs["result"]["analyze"]>
+export type AnalyzeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "description" | "resumeData" | "createdAt" | "updatedAt", ExtArgs["result"]["analyze"]>
 export type AnalyzeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -494,6 +560,8 @@ export type $AnalyzePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
+    title: string
+    description: string
     resumeData: string
     createdAt: Date
     updatedAt: Date
@@ -923,6 +991,8 @@ export interface Prisma__AnalyzeClient<T, Null = never, ExtArgs extends runtime.
 export interface AnalyzeFieldRefs {
   readonly id: Prisma.FieldRef<"Analyze", 'String'>
   readonly userId: Prisma.FieldRef<"Analyze", 'String'>
+  readonly title: Prisma.FieldRef<"Analyze", 'String'>
+  readonly description: Prisma.FieldRef<"Analyze", 'String'>
   readonly resumeData: Prisma.FieldRef<"Analyze", 'String'>
   readonly createdAt: Prisma.FieldRef<"Analyze", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Analyze", 'DateTime'>

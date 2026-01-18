@@ -18,6 +18,8 @@ export async function getAllAnalyzesAction() {
       orderBy: { createdAt: "desc" },
       select: {
         id: true,
+        title: true,
+        description: true,
         createdAt: true,
         updatedAt: true,
       },
