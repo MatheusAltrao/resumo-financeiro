@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { AnalyzeProps } from "@/types/analyze";
-import { Eye, Trash } from "lucide-react";
+import { Eye } from "lucide-react";
 import Link from "next/link";
+import AnalyzeDeleteButton from "./analyze-delete-button";
 
 interface AnalyzeCardProps {
   analyze: AnalyzeProps;
@@ -26,9 +27,7 @@ export default function AnalyzeCard({ analyze }: AnalyzeCardProps) {
             <Eye /> Ver Análise
           </Button>
         </Link>
-        <Button variant={"destructive"}>
-          <Trash /> Apagar
-        </Button>
+        <AnalyzeDeleteButton analyzeId={analyze.id} />
       </div>
     </div>
   );
