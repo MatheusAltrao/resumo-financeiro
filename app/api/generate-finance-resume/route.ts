@@ -60,7 +60,9 @@ export async function POST(request: Request) {
     const content = response.choices[0].message.content;
 
     if (content) {
-      await createAnalyzeAction(content.trim());
+      // Usar o nome do primeiro arquivo como referência
+      const firstFileName = files[0]?.name;
+      await createAnalyzeAction(content.trim(), firstFileName);
     }
 
     return NextResponse.json({

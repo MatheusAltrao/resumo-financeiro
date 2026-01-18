@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { FinanceResume } from "@/types/finance-resume";
 
-export async function createAnalyzeAction(resumeGenerated: string) {
+export async function createAnalyzeAction(resumeGenerated: string, fileName?: string) {
   const session = await auth();
 
   if (!session || !session.user?.id) {
@@ -14,29 +14,24 @@ export async function createAnalyzeAction(resumeGenerated: string) {
   const userId = session.user.id;
 
   try {
-    // Gerar título e descrição baseados nos dados
-    const now = new Date();
-    const monthYear = now.toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
-    const title = `Análise Financeira - ${monthYear.charAt(0).toUpperCase() + monthYear.slice(1)}`;
-
+    // Usar o nome do arquivo sem .csv como título
+    let title = fileName ? fileName.replace(/\.csv$/i, "") : "Análise Financeira";
     let description = "Resumo financeiro detalhado";
 
-    // Tentar extrair informações do resumo para criar uma descrição melhor
     try {
       const resumeData: FinanceResume = JSON.parse(resumeGenerated);
       const balance = resumeData.generalSummary.finalBalance;
-      const classification = resumeData.generalSummary.classification;
 
+      // Gerar descrição baseada no saldo final
       if (balance > 0) {
-        description = `Saldo positivo de R$ ${balance.toFixed(2).replace(".", ",")} - Situação ${classification}`;
+        description = `O saldo final foi de R$ ${balance.toFixed(2).replace(".", ",")} (Positivo)`;
       } else if (balance < 0) {
-        description = `Déficit de R$ ${Math.abs(balance).toFixed(2).replace(".", ",")} - Situação ${classification}`;
+        description = `O saldo final foi de R$ ${balance.toFixed(2).replace(".", ",")} (Negativo)`;
       } else {
-        description = `Saldo neutro - Situação ${classification}`;
+        description = `O saldo final foi de R$ 0,00 (Neutro)`;
       }
     } catch {
-      // Se falhar ao parsear, usa a descrição padrão
-      description = "Resumo financeiro detalhado gerado pela IA";
+      description = "Resumo financeiro detalhado";
     }
 
     const analyze = await prisma.analyze.create({
