@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button";
 import { AnalyzeProps } from "@/types/analyze";
+import { Eye, Trash } from "lucide-react";
 import Link from "next/link";
 
 interface AnalyzeCardProps {
@@ -7,11 +9,8 @@ interface AnalyzeCardProps {
 
 export default function AnalyzeCard({ analyze }: AnalyzeCardProps) {
   return (
-    <Link href={`/analyzes/${analyze.id}`}>
-      <div
-        key={analyze.id}
-        className="col-span-3 md:col-span-1 p-4 border border-border rounded-lg bg-card hover:bg-accent/50 transition cursor-pointer"
-      >
+    <div key={analyze.id} className=" p-4 border border-border rounded-lg cursor-pointer space-y-4">
+      <div>
         <div>
           <h3 className="font-semibold text-lg  text-foreground">{analyze.title.split(" - ")[0]}</h3>
           <p>{analyze.description}</p>
@@ -20,6 +19,17 @@ export default function AnalyzeCard({ analyze }: AnalyzeCardProps) {
           Criado em: {analyze.createdAt.toLocaleDateString()} às {analyze.createdAt.toLocaleTimeString()}
         </span>
       </div>
-    </Link>
+
+      <div className="flex flex-col gap-2">
+        <Link href={`/analyzes/${analyze.id}`}>
+          <Button variant={"outline"} className="w-full">
+            <Eye /> Ver Análise
+          </Button>
+        </Link>
+        <Button variant={"destructive"}>
+          <Trash /> Apagar
+        </Button>
+      </div>
+    </div>
   );
 }
