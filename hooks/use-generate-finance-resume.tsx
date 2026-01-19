@@ -1,4 +1,4 @@
-import generateFinanceResumePrompt from "@/http";
+import generateFinanceResumePrompt from "@/http/open-ai";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
