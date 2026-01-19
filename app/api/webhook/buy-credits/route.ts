@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "node:crypto";
 
@@ -34,6 +35,11 @@ interface WebhookEvent {
       id: string;
       kind: string;
       status: string;
+      customerId?: string;
+    };
+    billing?: {
+      id: string;
+      customerId?: string;
     };
     transaction?: {
       id: string;
@@ -125,32 +131,42 @@ async function handleBillingPaid(event: WebhookEvent) {
       return;
     }
 
+    // Buscar o customerId no payload
+    const customerId = event.data.pixQrCode?.customerId || event.data.billing?.customerId;
+
+    if (!customerId) {
+      console.error("❌ Customer ID não encontrado no evento");
+      console.log("Evento completo:", JSON.stringify(event, null, 2));
+      return;
+    }
+
     // Valor em centavos - R$ 19,99 = 1999 centavos = 10 créditos
     const PRICE_PER_PACKAGE = 1999; // R$ 19,99
     const CREDITS_PER_PACKAGE = 10;
 
     if (amount === PRICE_PER_PACKAGE) {
-      // Aqui você precisa identificar o usuário
-      // Você pode usar o externalId ou metadata para vincular ao usuário
-      // Por enquanto, vou deixar um exemplo comentado
+      // Buscar usuário pelo abacatePayCustomerId
+      const user = await prisma.user.findFirst({
+        where: { abacatePayCustomerId: customerId },
+      });
 
-      /*
-      const userId = "USER_ID_FROM_METADATA_OR_EXTERNAL_ID";
-      
+      if (!user) {
+        console.error(`❌ Usuário não encontrado com abacatePayCustomerId: ${customerId}`);
+        return;
+      }
+
+      // Adicionar 10 créditos ao usuário
       await prisma.user.update({
-        where: { id: userId },
+        where: { id: user.id },
         data: {
           credits: {
-            increment: CREDITS_PER_PACKAGE
-          }
-        }
+            increment: CREDITS_PER_PACKAGE,
+          },
+        },
       });
-      
-      console.log(`✅ ${CREDITS_PER_PACKAGE} créditos adicionados ao usuário ${userId}`);
-      */
 
-      console.log(`✅ Pagamento de R$ ${amount / 100} confirmado. ${CREDITS_PER_PACKAGE} créditos devem ser adicionados.`);
-      console.log("⚠️ Implemente a lógica de vincular o pagamento ao usuário correto");
+      console.log(`✅ ${CREDITS_PER_PACKAGE} créditos adicionados ao usuário ${user.id} (${user.email})`);
+      console.log(`💰 Pagamento de R$ ${amount / 100} confirmado para o customer ${customerId}`);
     } else {
       console.warn(`⚠️ Valor inesperado recebido: R$ ${amount / 100}`);
     }
