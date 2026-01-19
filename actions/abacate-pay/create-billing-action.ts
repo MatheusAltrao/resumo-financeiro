@@ -13,6 +13,10 @@ export async function createBillingAction() {
 
   const token = process.env.ABACATE_PAY_TOKEN;
 
+  if (!token) {
+    throw new Error("Token do Abacate Pay não configurado");
+  }
+
   const customerId = await getCustomerIdAction();
 
   const customer = {

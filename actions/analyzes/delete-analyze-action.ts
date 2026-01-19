@@ -11,6 +11,10 @@ export async function deleteAnalyzeAction(analyzeId: string) {
     throw new Error("Usuário não autenticado");
   }
 
+  if (!analyzeId) {
+    throw new Error("ID da análise é obrigatório");
+  }
+
   const userId = session.user.id;
 
   try {

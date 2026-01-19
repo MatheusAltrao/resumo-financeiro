@@ -11,6 +11,14 @@ export async function createAnalyzeAction(resumeGenerated: string, fileName?: st
     throw new Error("Usuário não autenticado");
   }
 
+  if (!resumeGenerated) {
+    throw new Error("Resumo financeiro é obrigatório");
+  }
+
+  if (!fileName) {
+    throw new Error("Nome do arquivo é obrigatório");
+  }
+
   const userId = session.user.id;
 
   try {
