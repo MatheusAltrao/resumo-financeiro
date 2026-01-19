@@ -96,3 +96,23 @@ model Analyze {
 
   @@index([userId])
 }
+
+model PurchaseEvent {
+  id            String   @id @default(cuid())
+  eventId       String   @unique // ID do evento do webhook
+  userId        String?
+  customerId    String // AbacatePay Customer ID
+  amount        Int // Valor em centavos
+  creditsAdded  Int // Quantidade de créditos adicionados
+  paymentMethod String? // Método de pagamento
+  status        String   @default("pending") // pending, completed, failed
+  billingId     String? // ID do billing do AbacatePay
+  transactionId String? // ID da transação
+  rawEventData  String   @db.Text // JSON completo do evento
+  processedAt   DateTime @default(now())
+
+  @@index([customerId])
+  @@index([userId])
+  @@index([eventId])
+  @@index([status])
+}

@@ -5,8 +5,8 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-// Validação de UUID
-const analyzeIdSchema = z.string().uuid("ID da análise inválido");
+// Validação de CUID
+const analyzeIdSchema = z.string().min(20, "ID da análise inválido").max(30, "ID da análise inválido");
 
 export async function deleteAnalyzeAction(analyzeId: string) {
   const session = await auth();

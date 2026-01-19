@@ -1,10 +1,75 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "node:crypto";
+import { z } from "zod";
 
 // Public HMAC key do AbacatePay
 const ABACATEPAY_PUBLIC_KEY =
   "t9dXRhHHo3yDEj5pVDYz0frf7q6bMKyMRmxxCPIPp3RCplBfXRxqlC6ZpiWmOqj4L63qEaeUOtrCI8P0VMUgo6iIga2ri9ogaHFs0WIIywSMg0q7RmBfybe1E5XJcfC4IW3alNqym0tXoAKkzvfEjZxV6bE0oG2zJrNNYmUCKZyV0KZ3JS8Votf9EAWWYdiDkMkpbMdPggfh1EqHlVkMiTady6jOR3hyzGEHrIz2Ret0xHKMbiqkr9HS1JhNHDX9";
+
+// Validação do schema do evento com Zod
+const webhookEventSchema = z.object({
+  id: z.string().min(1, "Event ID é obrigatório"),
+  event: z.enum(["billing.paid", "withdraw.done", "withdraw.failed"]),
+  devMode: z.boolean(),
+  data: z.object({
+    payment: z
+      .object({
+        amount: z.number().positive(),
+        fee: z.number(),
+        method: z.string(),
+      })
+      .optional(),
+    pixQrCode: z
+      .object({
+        amount: z.number().positive(),
+        id: z.string(),
+        kind: z.string(),
+        status: z.string(),
+        customerId: z.string().optional(),
+      })
+      .optional(),
+    billing: z
+      .object({
+        id: z.string(),
+        amount: z.number().positive(),
+        customer: z.object({
+          id: z.string().min(1, "Customer ID é obrigatório"),
+          metadata: z.object({
+            name: z.string(),
+            email: z.string().email(),
+            cellphone: z.string(),
+            taxId: z.string(),
+            zipCode: z.string(),
+            country: z.string(),
+          }),
+        }),
+        frequency: z.string(),
+        kind: z.array(z.string()),
+        status: z.string(),
+        products: z.array(
+          z.object({
+            id: z.string(),
+            externalId: z.string(),
+            quantity: z.number(),
+          }),
+        ),
+        paidAmount: z.number(),
+      })
+      .optional(),
+    transaction: z
+      .object({
+        id: z.string(),
+        status: z.string(),
+        kind: z.string(),
+        amount: z.number(),
+        externalId: z.string().optional(),
+      })
+      .optional(),
+  }),
+});
+
+type WebhookEvent = z.infer<typeof webhookEventSchema>;
 
 /**
  * Verifica se a assinatura do webhook corresponde ao HMAC esperado.
@@ -20,59 +85,15 @@ function verifyAbacateSignature(rawBody: string, signatureFromHeader: string): b
   return A.length === B.length && crypto.timingSafeEqual(A, B);
 }
 
-interface WebhookEvent {
-  id: string;
-  event: "billing.paid" | "withdraw.done" | "withdraw.failed";
-  devMode: boolean;
-  data: {
-    payment?: {
-      amount: number;
-      fee: number;
-      method: string;
-    };
-    pixQrCode?: {
-      amount: number;
-      id: string;
-      kind: string;
-      status: string;
-      customerId?: string;
-    };
-    billing?: {
-      id: string;
-      amount: number;
-      customer: {
-        id: string;
-        metadata: {
-          name: string;
-          email: string;
-          cellphone: string;
-          taxId: string;
-          zipCode: string;
-          country: string;
-        };
-      };
-      frequency: string;
-      kind: string[];
-      status: string;
-      products: Array<{
-        id: string;
-        externalId: string;
-        quantity: number;
-      }>;
-      paidAmount: number;
-    };
-    transaction?: {
-      id: string;
-      status: string;
-      kind: string;
-      amount: number;
-      externalId?: string;
-    };
-  };
+/**
+ * Verifica se o evento já foi processado no banco de dados
+ */
+async function isEventAlreadyProcessed(eventId: string): Promise<boolean> {
+  const existingEvent = await prisma.purchaseEvent.findUnique({
+    where: { eventId },
+  });
+  return existingEvent !== null;
 }
-
-// Set para armazenar eventos já processados (em produção, use banco de dados)
-const processedEvents = new Set<string>();
 
 export async function POST(request: NextRequest) {
   try {
@@ -101,20 +122,34 @@ export async function POST(request: NextRequest) {
     }
 
     // 4) Parse do evento
-    const event: WebhookEvent = JSON.parse(rawBody);
+    let event: WebhookEvent;
+    try {
+      const parsedData = JSON.parse(rawBody);
+      const validation = webhookEventSchema.safeParse(parsedData);
 
-    // 5) Verificar se o evento já foi processado (idempotência)
-    if (processedEvents.has(event.id)) {
+      if (!validation.success) {
+        console.error("❌ Validação do evento falhou:", validation.error.issues);
+        return NextResponse.json({ error: "Invalid event structure", details: validation.error.issues }, { status: 400 });
+      }
+
+      event = validation.data;
+    } catch (error) {
+      console.error("❌ Erro ao fazer parse do evento:", error);
+      return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    }
+
+    // 5) Verificar se o evento já foi processado (idempotência com banco de dados)
+    if (await isEventAlreadyProcessed(event.id)) {
       console.log(`⚠️ Evento ${event.id} já foi processado`);
       return NextResponse.json({ received: true, message: "Event already processed" });
     }
 
     // 6) Processar o evento
-    console.log(`📦 Evento recebido:  billing: ${event.data.billing?.customer.id})`);
+    console.log(`📦 Evento recebido: ${event.event} (ID: ${event.id})`);
 
     switch (event.event) {
       case "billing.paid":
-        await handleBillingPaid(event);
+        await handleBillingPaid(event, rawBody);
         break;
 
       case "withdraw.done":
@@ -129,9 +164,6 @@ export async function POST(request: NextRequest) {
         console.log(`⚠️ Evento não tratado: ${event.event}`);
     }
 
-    // 7) Marcar evento como processado
-    processedEvents.add(event.id);
-
     return NextResponse.json({ received: true });
   } catch (error) {
     console.error("❌ Erro ao processar webhook:", error);
@@ -142,48 +174,112 @@ export async function POST(request: NextRequest) {
 /**
  * Processa o evento de pagamento confirmado
  */
-async function handleBillingPaid(event: WebhookEvent) {
-  try {
-    const amount = event.data.payment?.amount || event.data.pixQrCode?.amount;
+async function handleBillingPaid(event: WebhookEvent, rawEventData: string) {
+  const customerId = event.data.billing?.customer?.id;
+  const amount = event.data.payment?.amount || event.data.pixQrCode?.amount;
+  const paymentMethod = event.data.payment?.method || "pix";
 
-    if (!amount) {
-      console.error("❌ Valor do pagamento não encontrado");
+  try {
+    // Validações básicas
+    if (!amount || amount <= 0) {
+      console.error("❌ Valor do pagamento inválido:", amount);
+      await savePurchaseEvent(event, rawEventData, "failed", null, 0);
       return;
     }
-
-    // Buscar o customerId no payload
-    const customerId = event.data.billing?.customer?.id;
 
     if (!customerId) {
       console.error("❌ Customer ID não encontrado no evento");
-      console.log("Evento completo:", JSON.stringify(event, null, 2));
+      await savePurchaseEvent(event, rawEventData, "failed", null, 0);
       return;
     }
 
-    // Valor em centavos - R$ 19,99 = 1999 centavos = 10 créditos
+    // Calcular créditos baseado no valor pago
     const PRICE_PER_PACKAGE = 1999; // R$ 19,99
     const CREDITS_PER_PACKAGE = 10;
 
+    // Validar se o valor é múltiplo do pacote
+    if (amount % PRICE_PER_PACKAGE !== 0) {
+      console.warn(`⚠️ Valor ${amount} não é múltiplo do pacote padrão`);
+    }
+
+    const creditsToAdd = Math.floor(amount / PRICE_PER_PACKAGE) * CREDITS_PER_PACKAGE;
+
+    if (creditsToAdd <= 0) {
+      console.error("❌ Quantidade de créditos calculada é inválida:", creditsToAdd);
+      await savePurchaseEvent(event, rawEventData, "failed", null, 0);
+      return;
+    }
+
+    // Buscar usuário
     const user = await prisma.user.findFirst({
       where: { abacatePayCustomerId: customerId },
+      select: { id: true, credits: true, email: true },
     });
 
     if (!user) {
       console.error(`❌ Usuário não encontrado com abacatePayCustomerId: ${customerId}`);
+      await savePurchaseEvent(event, rawEventData, "failed", null, creditsToAdd);
       return;
     }
 
-    // Adicionar 10 créditos ao usuário
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        credits: {
-          increment: CREDITS_PER_PACKAGE,
+    // Usar transação para garantir atomicidade
+    await prisma.$transaction(async (tx) => {
+      // Adicionar créditos ao usuário
+      await tx.user.update({
+        where: { id: user.id },
+        data: {
+          credits: {
+            increment: creditsToAdd,
+          },
         },
+      });
+
+      // Salvar evento de compra
+      await tx.purchaseEvent.create({
+        data: {
+          eventId: event.id,
+          userId: user.id,
+          customerId,
+          amount,
+          creditsAdded: creditsToAdd,
+          paymentMethod,
+          status: "completed",
+          billingId: event.data.billing?.id,
+          transactionId: event.data.transaction?.id,
+          rawEventData,
+        },
+      });
+    });
+
+    console.log(`✅ ${creditsToAdd} créditos adicionados ao usuário ${user.email} (ID: ${user.id})`);
+  } catch (error) {
+    console.error("❌ Erro ao processar billing.paid:", error);
+    // Salvar evento como failed
+    await savePurchaseEvent(event, rawEventData, "failed", null, 0);
+    throw error;
+  }
+}
+
+/**
+ * Salva o evento de compra no banco de dados
+ */
+async function savePurchaseEvent(event: WebhookEvent, rawEventData: string, status: string, userId: string | null, creditsAdded: number) {
+  try {
+    await prisma.purchaseEvent.create({
+      data: {
+        eventId: event.id,
+        userId,
+        customerId: event.data.billing?.customer?.id || "unknown",
+        amount: event.data.payment?.amount || event.data.pixQrCode?.amount || 0,
+        creditsAdded,
+        paymentMethod: event.data.payment?.method || "unknown",
+        status,
+        billingId: event.data.billing?.id,
+        transactionId: event.data.transaction?.id,
+        rawEventData,
       },
     });
   } catch (error) {
-    console.error("❌ Erro ao processar billing.paid:", error);
-    throw error;
+    console.error("❌ Erro ao salvar evento de compra:", error);
   }
 }

@@ -389,7 +389,8 @@ export const ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   Authenticator: 'Authenticator',
-  Analyze: 'Analyze'
+  Analyze: 'Analyze',
+  PurchaseEvent: 'PurchaseEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "authenticator" | "analyze"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "authenticator" | "analyze" | "purchaseEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +854,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PurchaseEvent: {
+      payload: Prisma.$PurchaseEventPayload<ExtArgs>
+      fields: Prisma.PurchaseEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PurchaseEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PurchaseEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseEventPayload>
+        }
+        findFirst: {
+          args: Prisma.PurchaseEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PurchaseEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseEventPayload>
+        }
+        findMany: {
+          args: Prisma.PurchaseEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseEventPayload>[]
+        }
+        create: {
+          args: Prisma.PurchaseEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseEventPayload>
+        }
+        createMany: {
+          args: Prisma.PurchaseEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PurchaseEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseEventPayload>[]
+        }
+        delete: {
+          args: Prisma.PurchaseEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseEventPayload>
+        }
+        update: {
+          args: Prisma.PurchaseEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.PurchaseEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PurchaseEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PurchaseEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.PurchaseEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseEventPayload>
+        }
+        aggregate: {
+          args: Prisma.PurchaseEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePurchaseEvent>
+        }
+        groupBy: {
+          args: Prisma.PurchaseEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PurchaseEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseEventCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -973,6 +1048,24 @@ export const AnalyzeScalarFieldEnum = {
 } as const
 
 export type AnalyzeScalarFieldEnum = (typeof AnalyzeScalarFieldEnum)[keyof typeof AnalyzeScalarFieldEnum]
+
+
+export const PurchaseEventScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  userId: 'userId',
+  customerId: 'customerId',
+  amount: 'amount',
+  creditsAdded: 'creditsAdded',
+  paymentMethod: 'paymentMethod',
+  status: 'status',
+  billingId: 'billingId',
+  transactionId: 'transactionId',
+  rawEventData: 'rawEventData',
+  processedAt: 'processedAt'
+} as const
+
+export type PurchaseEventScalarFieldEnum = (typeof PurchaseEventScalarFieldEnum)[keyof typeof PurchaseEventScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1168,6 +1261,7 @@ export type GlobalOmitConfig = {
   verificationToken?: Prisma.VerificationTokenOmit
   authenticator?: Prisma.AuthenticatorOmit
   analyze?: Prisma.AnalyzeOmit
+  purchaseEvent?: Prisma.PurchaseEventOmit
 }
 
 /* Types for Logging */

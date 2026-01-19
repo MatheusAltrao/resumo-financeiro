@@ -69,3 +69,8 @@ export type Authenticator = Prisma.AuthenticatorModel
  * 
  */
 export type Analyze = Prisma.AnalyzeModel
+/**
+ * Model PurchaseEvent
+ * 
+ */
+export type PurchaseEvent = Prisma.PurchaseEventModel

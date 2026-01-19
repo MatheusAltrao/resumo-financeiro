@@ -4,8 +4,8 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
-// Validação de UUID
-const analyzeIdSchema = z.string().uuid("ID da análise inválido");
+// Validação de CUID
+const analyzeIdSchema = z.string().min(20, "ID da análise inválido").max(30, "ID da análise inválido");
 
 export async function getAnalyzeByIdAction(analyzeId: string) {
   const session = await auth();

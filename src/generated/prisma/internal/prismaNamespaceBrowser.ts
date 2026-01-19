@@ -56,7 +56,8 @@ export const ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   Authenticator: 'Authenticator',
-  Analyze: 'Analyze'
+  Analyze: 'Analyze',
+  PurchaseEvent: 'PurchaseEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -156,6 +157,24 @@ export const AnalyzeScalarFieldEnum = {
 } as const
 
 export type AnalyzeScalarFieldEnum = (typeof AnalyzeScalarFieldEnum)[keyof typeof AnalyzeScalarFieldEnum]
+
+
+export const PurchaseEventScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  userId: 'userId',
+  customerId: 'customerId',
+  amount: 'amount',
+  creditsAdded: 'creditsAdded',
+  paymentMethod: 'paymentMethod',
+  status: 'status',
+  billingId: 'billingId',
+  transactionId: 'transactionId',
+  rawEventData: 'rawEventData',
+  processedAt: 'processedAt'
+} as const
+
+export type PurchaseEventScalarFieldEnum = (typeof PurchaseEventScalarFieldEnum)[keyof typeof PurchaseEventScalarFieldEnum]
 
 
 export const SortOrder = {
