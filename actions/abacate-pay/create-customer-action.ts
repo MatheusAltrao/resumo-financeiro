@@ -47,6 +47,7 @@ export async function createCustomerAction() {
 
     const response = await fetch("https://api.abacatepay.com/v1/customer/create", options);
     const data: CustomerResponseProps = await response.json();
+
     const customerId = data.data.id;
 
     await prisma.user.update({
