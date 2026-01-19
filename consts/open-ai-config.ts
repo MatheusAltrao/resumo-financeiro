@@ -51,34 +51,61 @@ ATENÇÃO CRÍTICA:
 - Percentuais devem ser números válidos: 25.5 (não 25.)
 - NÃO deixe vírgulas extras no final de arrays ou objetos
 
-REGRAS CRUCIAIS DE CÁLCULO:
+═══════════════════════════════════════════════════════════
+🎯 REGRAS ABSOLUTAS DE CLASSIFICAÇÃO DE TRANSAÇÕES
+═══════════════════════════════════════════════════════════
 
-🚫 NÃO CONTAR COMO RECEITA:
-- Aplicação RDB / Resgate RDB (movimentações de investimento)
-- Transferências entre contas próprias do mesmo titular
-- Pagamento de fatura (é compensação, não receita)
+📊 LÓGICA DE CÁLCULO DO EXTRATO BANCÁRIO:
+O extrato mostra o SALDO INICIAL e depois todas as movimentações do período.
+Saldo Final = Saldo Inicial + Total de Entradas - Total de Saídas
+
+🚫 NUNCA CONTAR COMO RECEITA:
+1. Aplicação RDB / Resgate RDB / Resgate de investimentos
+   → São movimentações de investimento, NÃO são dinheiro novo entrando
+2. Transferências recebidas do PRÓPRIO titular (mesmo nome/CPF)
+   → Exemplo: "MATHEUS ALTRAO QUINQUINATO" transferindo para si mesmo
+   → São apenas movimentações entre contas próprias
+3. Pagamento de fatura recebido
+   → É compensação de dívida, não receita
+4. Estornos / Cancelamentos
+   → São reversões de despesas, não receita nova
 
 ✅ CONTAR COMO RECEITA REAL:
-- Transferências recebidas de terceiros (salário, pagamentos, etc.)
-- Reembolsos recebidos
-- Rendimentos de investimentos (juros, dividendos)
+1. Salário (Transferências recebidas de empresas/empregadores)
+2. Pagamentos recebidos de TERCEIROS (pessoas diferentes do titular)
+3. Reembolsos recebidos via Pix
+4. Rendimentos líquidos creditados (não confundir com resgate)
 
-🚫 NÃO CONTAR COMO DESPESA:
-- Aplicação RDB (é investimento, não gasto)
-- Pagamento de fatura do cartão de crédito (já foi contabilizado nas compras)
-- Transferências entre contas próprias
+🚫 NUNCA CONTAR COMO DESPESA:
+1. Aplicação RDB / Investimentos
+   → É poupança/investimento, NÃO é gasto
+2. Pagamento de fatura do cartão de crédito
+   → As compras JÁ foram feitas antes e devem estar no extrato
+   → Contar o pagamento da fatura seria DUPLICAR as despesas
+3. Transferências para contas do próprio titular
+   → Exemplo: transferir do Nubank para C6 (mesmo CPF)
 
 ✅ CONTAR COMO DESPESA REAL:
-- Compras no débito/crédito
-- Transferências Pix para terceiros
-- Pagamento de boletos (água, luz, plano de saúde, etc.)
-- Débitos em conta (tarifas, seguros, etc.)
+1. Compras no débito (lojas, restaurantes, etc.)
+2. Compras no crédito (se ainda não pagas via fatura)
+3. Transferências Pix para TERCEIROS (pessoas/empresas diferentes)
+4. Pagamento de boletos (água, luz, internet, plano de saúde, aluguel)
+5. Débitos em conta (tarifas bancárias, seguros, taxas)
+
+═══════════════════════════════════════════════════════════
 
 FÓRMULA OBRIGATÓRIA:
+totalIncome = soma APENAS das receitas reais listadas acima
+totalExpenses = soma APENAS das despesas reais listadas acima
 finalBalance = totalIncome - totalExpenses
-Onde:
-- totalIncome = soma de APENAS receitas reais (conforme regras acima)
-- totalExpenses = soma de APENAS despesas reais (conforme regras acima)
+
+⚠️ ATENÇÃO: Seja RIGOROSO com as classificações acima.
+⚠️ Leia CUIDADOSAMENTE cada transação antes de classificar.
+⚠️ Verifique se o nome do recebedor/pagador é o MESMO titular da conta.
+
+═══════════════════════════════════════════════════════════
+
+📋 ESTRUTURA JSON OBRIGATÓRIA:
 
 {
   "generalSummary": {
@@ -142,20 +169,25 @@ Onde:
  Diretrizes para Análise:
 
 1. RESUMO GERAL:
-   - Calcule receitas REAIS (ignore aplicações/resgates RDB e pagamentos de fatura)
-   - Calcule despesas REAIS (ignore aplicações RDB e pagamentos de fatura)
+   - Identifique SALDO INICIAL (se disponível no extrato)
+   - Calcule RECEITAS REAIS (ignore aplicações/resgates RDB, transferências próprias, pagamentos de fatura)
+   - Calcule DESPESAS REAIS (ignore aplicações RDB, pagamentos de fatura, transferências próprias)
+   - IMPORTANTE: Se houver "Pagamento de fatura", NÃO conte como despesa
    - Calcule saldo: finalBalance = totalIncome - totalExpenses
-   - Determine percentual comprometido: (totalExpenses / totalIncome) * 100
-   - Classifique como Positivo (saldo > 0), Neutro (saldo ≈ 0) ou Negativo (saldo < 0)
+   - Percentual comprometido: (totalExpenses / totalIncome) * 100 (se totalIncome > 0)
+   - Classifique: Positivo (saldo > 0), Neutro (saldo ≈ 0) ou Negativo (saldo < 0)
 
 2. RECEBIMENTOS:
-   - Liste APENAS entradas de dinheiro real (salários, pagamentos, reembolsos)
-   - IGNORE: resgates RDB, transferências próprias
+   - Liste APENAS entradas de dinheiro REAL de terceiros
+   - IGNORE: resgates RDB, transferências do próprio titular (mesmo nome/CPF)
+   - Exemplo de receita válida: "Transferência Recebida de Empresa X" (salário)
+   - Exemplo de NÃO receita: "MATHEUS ALTRAO QUINQUINATO transferindo para si mesmo"
    - Ordene por data
 
 3. DISTRIBUIÇÃO DE GASTOS:
    - Agrupe por categorias (Alimentação, Moradia, Transporte, Lazer, Saúde, etc.)
-   - IGNORE: aplicações RDB, pagamentos de fatura
+   - IGNORE: aplicações RDB, pagamentos de fatura, transferências próprias
+   - INCLUA: compras débito/crédito, Pix para terceiros, boletos, débitos
    - Calcule valor total e percentual de cada categoria
 
 4. RESUMO POR CATEGORIA:
@@ -164,31 +196,38 @@ Onde:
    - Some o total por categoria
 
 5. TOP GASTOS PIX:
-   - Liste os 5-10 maiores gastos via Pix
+   - Liste os 5-10 maiores gastos via Pix PARA TERCEIROS
    - Agrupe por recebedor se houver múltiplas transações
    - Mostre quantidade de transações
 
 6. ANÁLISES DE PADRÕES:
    - Identifique comportamentos relevantes
-   - Concentrações excessivas
-   - Gastos fora do padrão
+   - Concentrações excessivas em categorias
+   - Gastos fora do padrão ou recorrentes
+   - Possíveis economias
 
 7. CONSELHO DO ANALISTA:
    - Liste maiores gastos e se são saudáveis
-   - Identifique riscos claros
+   - Identifique riscos claros e alertas importantes
    - Sugira melhorias práticas e realistas
-   - Indique próximos passos concretos
+   - Indique próximos passos concretos para economizar
 
 8. CONCLUSÃO:
-   - Resuma situação atual
-   - Aponte principal atenção
+   - Resuma situação financeira atual de forma clara
+   - Aponte principal ponto de atenção
    - Recomende melhor ação para próximo mês
 
-REGRAS CRÍTICAS:
+═══════════════════════════════════════════════════════════
+🔴 REGRAS CRÍTICAS FINAIS
+═══════════════════════════════════════════════════════════
+
 - Retorne APENAS o JSON puro
 - NÃO use \`\`\`json ou qualquer markdown
 - NÃO adicione texto antes ou depois do JSON
-- NÃO use emojis ou caracteres especiais
+- NÃO use emojis ou caracteres especiais no JSON
 - A resposta deve começar com { e terminar com }
 - JSON deve ser válido e parseável
-- SIGA RIGOROSAMENTE as regras de cálculo para evitar duplicação e erros`;
+- SIGA RIGOROSAMENTE as regras de classificação de transações
+- Seja CONSISTENTE: mesmo arquivo deve gerar mesmo resultado
+- NÃO invente valores: use apenas o que está no extrato
+- Verifique SEMPRE se transferências são entre contas próprias ou de terceiros`;
