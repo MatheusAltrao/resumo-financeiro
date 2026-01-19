@@ -39,7 +39,27 @@ interface WebhookEvent {
     };
     billing?: {
       id: string;
-      customerId?: string;
+      amount: number;
+      customer: {
+        id: string;
+        metadata: {
+          name: string;
+          email: string;
+          cellphone: string;
+          taxId: string;
+          zipCode: string;
+          country: string;
+        };
+      };
+      frequency: string;
+      kind: string[];
+      status: string;
+      products: Array<{
+        id: string;
+        externalId: string;
+        quantity: number;
+      }>;
+      paidAmount: number;
     };
     transaction?: {
       id: string;
@@ -132,7 +152,7 @@ async function handleBillingPaid(event: WebhookEvent) {
     }
 
     // Buscar o customerId no payload
-    const customerId = event.data.pixQrCode?.customerId || event.data.billing?.customerId;
+    const customerId = event.data.pixQrCode?.customerId || event.data.billing?.customer?.id;
 
     if (!customerId) {
       console.error("❌ Customer ID não encontrado no evento");
