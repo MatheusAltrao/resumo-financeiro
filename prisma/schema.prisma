@@ -8,17 +8,18 @@ generator client {
 }
 
 model User {
-  id            String          @id @default(cuid())
-  name          String?
-  email         String          @unique
-  emailVerified DateTime?
-  image         String?
-  credits       Int             @default(1)
-  accounts      Account[]
-  sessions      Session[]
-  analyzes      Analyze[]
+  id                   String          @id @default(cuid())
+  name                 String?
+  email                String          @unique
+  emailVerified        DateTime?
+  image                String?
+  credits              Int             @default(1)
+  abacatePayCustomerId String?
+  accounts             Account[]
+  sessions             Session[]
+  analyzes             Analyze[]
   // Optional for WebAuthn support
-  Authenticator Authenticator[]
+  Authenticator        Authenticator[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

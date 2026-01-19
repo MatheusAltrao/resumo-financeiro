@@ -36,7 +36,9 @@ export default async function Perfil() {
                 <DropdownMenuItem>
                   <Link href="/analyzes">Ver todas as análizes</Link>{" "}
                 </DropdownMenuItem>
-                <DropdownMenuItem>Comprar Créditos</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/buy-credits">Comprar Créditos</Link>
+                </DropdownMenuItem>
                 <form action={signOutAction}>
                   <Button variant={"destructive"} className="w-full h-8 mt-1 justify-start" type="submit">
                     Sair
