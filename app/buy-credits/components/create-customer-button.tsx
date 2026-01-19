@@ -4,6 +4,7 @@ import { createCustomerAction } from "@/actions/abacate-pay/create-customer-acti
 import IconLoading from "@/components/loadings/icon-loading";
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import toast from "react-hot-toast";
 
@@ -13,12 +14,14 @@ interface CreateCustomerButtonProps {
 
 export default function CreateCustomerButton({ hasCustomerId }: CreateCustomerButtonProps) {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const handleCreateCustomer = async () => {
     startTransition(async () => {
       try {
         await createCustomerAction();
         toast.success("Cliente criado com sucesso!");
+        router.refresh();
       } catch (error) {
         console.error("Erro ao criar cliente no Abacate Pay:", error);
         toast.error("Erro ao criar cliente no Abacate Pay.");
@@ -27,7 +30,7 @@ export default function CreateCustomerButton({ hasCustomerId }: CreateCustomerBu
   };
 
   return (
-    <Button disabled={hasCustomerId} onClick={handleCreateCustomer} className="w-full sm:w-auto" variant={"outline"}>
+    <Button disabled={hasCustomerId || isPending} onClick={handleCreateCustomer} className="w-full sm:w-auto" variant={"outline"}>
       {hasCustomerId ? (
         <div className="flex items-center gap-2">
           {isPending && <IconLoading text="Criando..." />}
