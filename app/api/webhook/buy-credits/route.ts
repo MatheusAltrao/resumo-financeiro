@@ -146,6 +146,7 @@ export async function POST(request: NextRequest) {
 
     // 6) Processar o evento
     console.log(`📦 Evento recebido: ${event.event} (ID: ${event.id})`);
+    console.log(`📄 Dados do evento:`, JSON.stringify(event, null, 2));
 
     switch (event.event) {
       case "billing.paid":
@@ -178,6 +179,8 @@ async function handleBillingPaid(event: WebhookEvent, rawEventData: string) {
   const customerId = event.data.billing?.customer?.id;
   const amount = event.data.payment?.amount || event.data.pixQrCode?.amount;
   const paymentMethod = event.data.payment?.method || "pix";
+
+  console.log(`🔍 Processando billing.paid - Customer: ${customerId}, Amount: ${amount}, Method: ${paymentMethod}`);
 
   try {
     // Validações básicas
@@ -216,11 +219,15 @@ async function handleBillingPaid(event: WebhookEvent, rawEventData: string) {
       select: { id: true, credits: true, email: true },
     });
 
+    console.log(`👤 Busca de usuário - customerId: ${customerId}, encontrado: ${!!user}`);
+
     if (!user) {
       console.error(`❌ Usuário não encontrado com abacatePayCustomerId: ${customerId}`);
       await savePurchaseEvent(event, rawEventData, "failed", null, creditsToAdd);
       return;
     }
+
+    console.log(`💾 Iniciando transação para adicionar ${creditsToAdd} créditos ao usuário ${user.email}`);
 
     // Usar transação para garantir atomicidade
     await prisma.$transaction(async (tx) => {
