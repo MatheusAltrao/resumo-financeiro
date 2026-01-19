@@ -1,15 +1,12 @@
-"use client";
-import { createCustomerAction } from "@/actions/abacate-pay/create-customer-action";
-import { Button } from "@/components/ui/button";
+import { getCustomerId } from "@/actions/user/get-customer-id";
+import InstructionsToPayment from "./components/instructions-to-payment";
 
-export default function BuyCreditsPage() {
-  const handleBuyCredits = async () => {
-    try {
-      await createCustomerAction();
-    } catch (error) {
-      console.error("Erro ao criar cliente no Abacate Pay:", error);
-    }
-  };
+export default async function BuyCreditsPage() {
+  const customerCreated = await getCustomerId();
 
-  return <Button onClick={handleBuyCredits}>Comprar</Button>;
+  return (
+    <div className="container mx-auto py-10 max-w-3xl">
+      <InstructionsToPayment customerId={customerCreated} />
+    </div>
+  );
 }
