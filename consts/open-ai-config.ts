@@ -59,38 +59,69 @@ ATENÇÃO CRÍTICA:
 O extrato mostra o SALDO INICIAL e depois todas as movimentações do período.
 Saldo Final = Saldo Inicial + Total de Entradas - Total de Saídas
 
-🚫 NUNCA CONTAR COMO RECEITA:
-1. Aplicação RDB / Resgate RDB / Resgate de investimentos
-   → São movimentações de investimento, NÃO são dinheiro novo entrando
-2. Transferências recebidas do PRÓPRIO titular (mesmo nome/CPF)
-   → Exemplo: "MATHEUS ALTRAO QUINQUINATO" transferindo para si mesmo
-   → São apenas movimentações entre contas próprias
-3. Pagamento de fatura recebido
-   → É compensação de dívida, não receita
-4. Estornos / Cancelamentos
-   → São reversões de despesas, não receita nova
+═══════════════════════════════════════════════════════════
+🟢 COMO IDENTIFICAR RECEITAS REAIS
+═══════════════════════════════════════════════════════════
 
-✅ CONTAR COMO RECEITA REAL:
-1. Salário (Transferências recebidas de empresas/empregadores)
-2. Pagamentos recebidos de TERCEIROS (pessoas diferentes do titular)
-3. Reembolsos recebidos via Pix
-4. Rendimentos líquidos creditados (não confundir com resgate)
+✅ SEMPRE CONTAR COMO RECEITA:
+1. Reembolsos recebidos via Pix de empresas/marketplace
+   → Ex: "Reembolso recebido pelo Pix PIX Marketplace"
+2. Transferências/Pix recebidos de PESSOAS FÍSICAS DIFERENTES
+   → Ex: "João da Silva" recebendo na conta de "Maria Santos"
+3. Transferências recebidas de EMPRESAS (salário, pagamentos)
+   → Ex: Transferência de "Empresa XPTO LTDA"
+4. Rendimentos líquidos explicitamente creditados
+   → Ex: "Rendimento líquido R$ 50,00"
+
+🚫 NUNCA CONTAR COMO RECEITA:
+1. Resgate RDB / Resgate de investimentos / Aplicação RDB
+   → São apenas movimentações de investimento
+2. Transferências recebidas do PRÓPRIO titular
+   → CRITÉRIO: Verificar se o NOME e CPF do remetente são IDÊNTICOS ao titular
+   → Ex: "MATHEUS ALTRAO QUINQUINATO" recebendo de "MATHEUS ALTRAO QUINQUINATO"
+   → Ex: "Maria Santos CPF •••.123.456-••" recebendo de "Maria Santos CPF •••.123.456-••"
+   → ATENÇÃO: Mesmo que venham de bancos diferentes (Nubank→C6, C6→Bradesco)
+3. Pagamento de fatura recebido
+4. Estornos (são reversões, não receitas novas)
+
+⚠️ REGRA DE OURO PARA TRANSFERÊNCIAS RECEBIDAS:
+- SE o nome do remetente for DIFERENTE do nome do titular → É RECEITA ✅
+- SE o nome do remetente for IGUAL ao nome do titular → NÃO é receita ❌
+- SE for empresa pagando pessoa física → É RECEITA ✅
+
+═══════════════════════════════════════════════════════════
+🔴 COMO IDENTIFICAR DESPESAS REAIS
+═══════════════════════════════════════════════════════════
+
+✅ SEMPRE CONTAR COMO DESPESA:
+1. Compras no débito em estabelecimentos
+   → Ex: "Compra no débito PADARIA PAO DE OURO"
+2. Compras no crédito (se ainda não compensadas por pagamento de fatura)
+   → Verificar se há "Pagamento de fatura" correspondente
+3. Transferências Pix enviadas para PESSOAS DIFERENTES do titular
+   → Ex: "João Silva" enviando para "Maria Santos"
+4. Transferências Pix enviadas para EMPRESAS
+   → Ex: "IFOOD.COM", "Marketplace", etc.
+5. Pagamento de boletos (serviços essenciais)
+   → Ex: "Pagamento de boleto efetuado SANESUL" (água)
+   → Ex: "UNIMED" (plano de saúde)
+6. Débitos em conta (tarifas, seguros)
+   → Ex: "Débito em conta R$ 112,56"
 
 🚫 NUNCA CONTAR COMO DESPESA:
 1. Aplicação RDB / Investimentos
-   → É poupança/investimento, NÃO é gasto
+   → É poupança, não gasto consumível
 2. Pagamento de fatura do cartão de crédito
-   → As compras JÁ foram feitas antes e devem estar no extrato
-   → Contar o pagamento da fatura seria DUPLICAR as despesas
-3. Transferências para contas do próprio titular
-   → Exemplo: transferir do Nubank para C6 (mesmo CPF)
+   → CRITÉRIO IMPORTANTE: Apenas NÃO conte se as compras do cartão JÁ estiverem listadas no extrato
+   → Se for extrato de CONTA CORRENTE com faturas de cartão → NÃO conte o pagamento
+   → Se for fatura de CARTÃO sem detalhamento de compras → CONTE como despesa
+3. Transferências enviadas para contas do PRÓPRIO titular
+   → Ex: Transferir do Nubank para C6 Bank (mesmo CPF)
 
-✅ CONTAR COMO DESPESA REAL:
-1. Compras no débito (lojas, restaurantes, etc.)
-2. Compras no crédito (se ainda não pagas via fatura)
-3. Transferências Pix para TERCEIROS (pessoas/empresas diferentes)
-4. Pagamento de boletos (água, luz, internet, plano de saúde, aluguel)
-5. Débitos em conta (tarifas bancárias, seguros, taxas)
+⚠️ REGRA DE OURO PARA PAGAMENTO DE FATURA:
+- SE o extrato mostrar COMPRAS DETALHADAS no débito/crédito → NÃO conte pagamento de fatura ❌
+- SE o extrato NÃO mostrar compras (apenas "Pagamento fatura R$ X") → CONTE como despesa ✅
+- No caso de extrato de conta corrente do Nubank → NÃO conte (compras já estão listadas) ❌
 
 ═══════════════════════════════════════════════════════════
 
@@ -99,9 +130,58 @@ totalIncome = soma APENAS das receitas reais listadas acima
 totalExpenses = soma APENAS das despesas reais listadas acima
 finalBalance = totalIncome - totalExpenses
 
-⚠️ ATENÇÃO: Seja RIGOROSO com as classificações acima.
-⚠️ Leia CUIDADOSAMENTE cada transação antes de classificar.
-⚠️ Verifique se o nome do recebedor/pagador é o MESMO titular da conta.
+═══════════════════════════════════════════════════════════
+⚠️ INSTRUÇÕES CRÍTICAS DE PROCESSAMENTO
+═══════════════════════════════════════════════════════════
+
+1. LEIA CADA LINHA do extrato individualmente
+2. Para CADA transação, faça as seguintes perguntas:
+   
+   SE FOR ENTRADA/RECEBIMENTO:
+   - É do próprio titular? (mesmo nome/CPF) → NÃO conte ❌
+   - É resgate de investimento? → NÃO conte ❌
+   - É de outra pessoa ou empresa? → CONTE como receita ✅
+   - É reembolso? → CONTE como receita ✅
+   
+   SE FOR SAÍDA/PAGAMENTO:
+   - É aplicação/investimento? → NÃO conte ❌
+   - É pagamento de fatura E as compras já estão no extrato? → NÃO conte ❌
+   - É para outra pessoa ou empresa? → CONTE como despesa ✅
+   - É compra no débito/crédito? → CONTE como despesa ✅
+   - É boleto de serviço? → CONTE como despesa ✅
+
+3. SOME todos os valores que você identificou como receita real
+4. SOME todos os valores que você identificou como despesa real
+5. CALCULE o saldo: totalIncome - totalExpenses
+
+═══════════════════════════════════════════════════════════
+
+📝 EXEMPLO PRÁTICO DE CLASSIFICAÇÃO:
+
+Transação: "Transferência Recebida 50.016.664 MATHEUS ALTRAO QUINQUINATO"
+→ Titular da conta: MATHEUS ALTRAO QUINQUINATO
+→ Remetente: MATHEUS ALTRAO QUINQUINATO (mesmo nome)
+→ Conclusão: NÃO é receita (transferência própria) ❌
+
+Transação: "Reembolso recebido pelo Pix PIX Marketplace R$ 193,73"
+→ É reembolso
+→ Conclusão: É RECEITA ✅ (+193,73)
+
+Transação: "Compra no débito PADARIA PAO DE OURO R$ 29,00"
+→ É compra em estabelecimento
+→ Conclusão: É DESPESA ✅ (-29,00)
+
+Transação: "Pagamento de fatura R$ 3.568,60"
+→ Verificar: O extrato tem compras detalhadas? SIM
+→ Conclusão: NÃO é despesa (já contadas) ❌
+
+Transação: "Resgate RDB R$ 90,94"
+→ É movimentação de investimento
+→ Conclusão: NÃO é receita ❌
+
+Transação: "Aplicação RDB R$ 1.500,00"
+→ É aplicação/poupança
+→ Conclusão: NÃO é despesa ❌
 
 ═══════════════════════════════════════════════════════════
 
@@ -169,12 +249,15 @@ finalBalance = totalIncome - totalExpenses
  Diretrizes para Análise:
 
 1. RESUMO GERAL:
-   - Identifique SALDO INICIAL (se disponível no extrato)
-   - Calcule RECEITAS REAIS (ignore aplicações/resgates RDB, transferências próprias, pagamentos de fatura)
-   - Calcule DESPESAS REAIS (ignore aplicações RDB, pagamentos de fatura, transferências próprias)
-   - IMPORTANTE: Se houver "Pagamento de fatura", NÃO conte como despesa
-   - Calcule saldo: finalBalance = totalIncome - totalExpenses
-   - Percentual comprometido: (totalExpenses / totalIncome) * 100 (se totalIncome > 0)
+   - Identifique o titular da conta (nome que aparece no cabeçalho)
+   - Leia TODAS as transações linha por linha
+   - Para CADA transação, aplique as regras de classificação acima
+   - IGNORE: Resgate/Aplicação RDB, transferências do próprio titular, pagamentos de fatura
+   - INCLUA: Reembolsos, compras no débito, Pix para terceiros, boletos
+   - Some todas as receitas reais → totalIncome
+   - Some todas as despesas reais → totalExpenses
+   - Calcule: finalBalance = totalIncome - totalExpenses
+   - Percentual comprometido: (totalExpenses / totalIncome) * 100 (se totalIncome > 0, senão retorne 0)
    - Classifique: Positivo (saldo > 0), Neutro (saldo ≈ 0) ou Negativo (saldo < 0)
 
 2. RECEBIMENTOS:

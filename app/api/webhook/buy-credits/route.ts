@@ -177,41 +177,48 @@ export async function POST(request: NextRequest) {
  */
 async function handleBillingPaid(event: WebhookEvent, rawEventData: string) {
   const customerId = event.data.billing?.customer?.id;
-  const amount = event.data.payment?.amount || event.data.pixQrCode?.amount;
+  const billingAmount = event.data.billing?.amount;
+  const paymentAmount = event.data.payment?.amount || event.data.pixQrCode?.amount;
   const paymentMethod = event.data.payment?.method || "pix";
 
-  console.log(`🔍 Processando billing.paid - Customer: ${customerId}, Amount: ${amount}, Method: ${paymentMethod}`);
+  console.log(
+    `🔍 Processando billing.paid - Customer: ${customerId}, Billing Amount: ${billingAmount}, Payment Amount: ${paymentAmount}, Method: ${paymentMethod}`,
+  );
 
   try {
     // Validações básicas
-    if (!amount || amount <= 0) {
-      console.error("❌ Valor do pagamento inválido:", amount);
-      await savePurchaseEvent(event, rawEventData, "failed", null, 0);
-      return;
-    }
-
     if (!customerId) {
       console.error("❌ Customer ID não encontrado no evento");
       await savePurchaseEvent(event, rawEventData, "failed", null, 0);
       return;
     }
 
-    // Calcular créditos baseado no valor pago
-    const PRICE_PER_PACKAGE = 1999; // R$ 19,99
-    const CREDITS_PER_PACKAGE = 10;
+    // Validar valores
+    const EXPECTED_AMOUNT = 1999; // R$ 19,99 em centavos
+    const CREDITS_TO_ADD = 10;
 
-    // Validar se o valor é múltiplo do pacote
-    if (amount % PRICE_PER_PACKAGE !== 0) {
-      console.warn(`⚠️ Valor ${amount} não é múltiplo do pacote padrão`);
-    }
-
-    const creditsToAdd = Math.floor(amount / PRICE_PER_PACKAGE) * CREDITS_PER_PACKAGE;
-
-    if (creditsToAdd <= 0) {
-      console.error("❌ Quantidade de créditos calculada é inválida:", creditsToAdd);
+    if (!billingAmount || billingAmount !== EXPECTED_AMOUNT) {
+      console.error(`❌ Valor do billing inválido. Esperado: ${EXPECTED_AMOUNT}, Recebido: ${billingAmount}`);
       await savePurchaseEvent(event, rawEventData, "failed", null, 0);
       return;
     }
+
+    if (!paymentAmount || paymentAmount !== EXPECTED_AMOUNT) {
+      console.error(`❌ Valor do pagamento inválido. Esperado: ${EXPECTED_AMOUNT}, Recebido: ${paymentAmount}`);
+      await savePurchaseEvent(event, rawEventData, "failed", null, 0);
+      return;
+    }
+
+    // Validar se billing.amount e payment.amount são iguais
+    if (billingAmount !== paymentAmount) {
+      console.error(`❌ Valores inconsistentes - Billing: ${billingAmount}, Payment: ${paymentAmount}`);
+      await savePurchaseEvent(event, rawEventData, "failed", null, 0);
+      return;
+    }
+
+    console.log(`✅ Valor validado: R$ ${(EXPECTED_AMOUNT / 100).toFixed(2)} → ${CREDITS_TO_ADD} créditos`);
+
+    const creditsToAdd = CREDITS_TO_ADD;
 
     // Buscar usuário
     const user = await prisma.user.findFirst({
@@ -242,12 +249,12 @@ async function handleBillingPaid(event: WebhookEvent, rawEventData: string) {
       });
 
       // Salvar evento de compra
-      await tx.purchaseEvent.create({
+      const purchaseEvent = await tx.purchaseEvent.create({
         data: {
           eventId: event.id,
           userId: user.id,
           customerId,
-          amount,
+          amount: billingAmount,
           creditsAdded: creditsToAdd,
           paymentMethod,
           status: "completed",
@@ -256,6 +263,8 @@ async function handleBillingPaid(event: WebhookEvent, rawEventData: string) {
           rawEventData,
         },
       });
+
+      console.log(`💾 PurchaseEvent criado com sucesso - ID: ${purchaseEvent.id}`);
     });
 
     console.log(`✅ ${creditsToAdd} créditos adicionados ao usuário ${user.email} (ID: ${user.id})`);
