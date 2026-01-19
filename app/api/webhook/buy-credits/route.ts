@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 6) Processar o evento
-    console.log(`📦 Evento recebido: ${event.event} (ID: ${event.id}, customerId: ${event.data.billing?.customer.id})`);
+    console.log(`📦 Evento recebido:  data: ${event.data})`);
 
     switch (event.event) {
       case "billing.paid":
