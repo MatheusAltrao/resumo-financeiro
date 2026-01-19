@@ -152,7 +152,7 @@ async function handleBillingPaid(event: WebhookEvent) {
     }
 
     // Buscar o customerId no payload
-    const customerId = event.data.pixQrCode?.customerId || event.data.billing?.customer?.id;
+    const customerId = event.data.billing?.customer?.id;
 
     if (!customerId) {
       console.error("❌ Customer ID não encontrado no evento");
@@ -164,32 +164,24 @@ async function handleBillingPaid(event: WebhookEvent) {
     const PRICE_PER_PACKAGE = 1999; // R$ 19,99
     const CREDITS_PER_PACKAGE = 10;
 
-    if (amount === PRICE_PER_PACKAGE) {
-      // Buscar usuário pelo abacatePayCustomerId
-      const user = await prisma.user.findFirst({
-        where: { abacatePayCustomerId: customerId },
-      });
+    const user = await prisma.user.findFirst({
+      where: { abacatePayCustomerId: customerId },
+    });
 
-      if (!user) {
-        console.error(`❌ Usuário não encontrado com abacatePayCustomerId: ${customerId}`);
-        return;
-      }
-
-      // Adicionar 10 créditos ao usuário
-      await prisma.user.update({
-        where: { id: user.id },
-        data: {
-          credits: {
-            increment: CREDITS_PER_PACKAGE,
-          },
-        },
-      });
-
-      console.log(`✅ ${CREDITS_PER_PACKAGE} créditos adicionados ao usuário ${user.id} (${user.email})`);
-      console.log(`💰 Pagamento de R$ ${amount / 100} confirmado para o customer ${customerId}`);
-    } else {
-      console.warn(`⚠️ Valor inesperado recebido: R$ ${amount / 100}`);
+    if (!user) {
+      console.error(`❌ Usuário não encontrado com abacatePayCustomerId: ${customerId}`);
+      return;
     }
+
+    // Adicionar 10 créditos ao usuário
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        credits: {
+          increment: CREDITS_PER_PACKAGE,
+        },
+      },
+    });
   } catch (error) {
     console.error("❌ Erro ao processar billing.paid:", error);
     throw error;
