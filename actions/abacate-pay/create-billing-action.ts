@@ -40,8 +40,8 @@ export async function createBillingAction() {
             price: 1999,
           },
         ],
-        returnUrl: "http://localhost:3000/buy-credits",
-        completionUrl: "http://localhost:3000/",
+        returnUrl: `${process.env.NEXT_PUBLIC_APP_URL}/buy-credits`,
+        completionUrl: `${process.env.NEXT_PUBLIC_APP_URL}/`,
         customerId: customer.id,
         customer: {
           name: customer.name,
