@@ -1,8 +1,6 @@
-"use client";
-import { createCustomerAction } from "@/actions/abacate-pay/create-customer-action";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle } from "lucide-react";
+import CreateBillingButton from "./create-billing-button";
+import CreateCustomerButton from "./create-customer-button";
 
 interface InstructionsToPaymentProps {
   customerId: string | null;
@@ -10,23 +8,6 @@ interface InstructionsToPaymentProps {
 
 export default function InstructionsToPayment({ customerId }: InstructionsToPaymentProps) {
   const hasCustomerId = !!customerId;
-
-  const handleCreateCustomer = async () => {
-    try {
-      await createCustomerAction();
-    } catch (error) {
-      console.error("Erro ao criar cliente no Abacate Pay:", error);
-    }
-  };
-
-  const handleBuyNow = async () => {
-    try {
-      // Lógica de compra será implementada aqui
-      console.log("Comprando créditos...");
-    } catch (error) {
-      console.error("Erro ao comprar créditos:", error);
-    }
-  };
 
   return (
     <Card>
@@ -46,15 +27,7 @@ export default function InstructionsToPayment({ customerId }: InstructionsToPaym
                 <h3 className="text-lg font-semibold">Seja um cliente nosso</h3>
                 <p className="text-muted-foreground">Primeiro, você precisa se cadastrar como cliente em nossa plataforma.</p>
               </div>
-              <Button disabled={hasCustomerId} onClick={handleCreateCustomer} className="w-full sm:w-auto" variant={"outline"}>
-                {hasCustomerId ? (
-                  <div className="flex items-center gap-2">
-                    <CheckCircle /> Cliente Criado
-                  </div>
-                ) : (
-                  "Criar Conta de Cliente"
-                )}
-              </Button>
+              <CreateCustomerButton hasCustomerId={hasCustomerId} />
             </div>
           </div>
 
@@ -65,9 +38,7 @@ export default function InstructionsToPayment({ customerId }: InstructionsToPaym
                 <h3 className="text-lg font-semibold">Comprar agora</h3>
                 <p className="text-muted-foreground">Após se cadastrar, finalize sua compra e comece a usar imediatamente.</p>
               </div>
-              <Button onClick={handleBuyNow} className="w-full sm:w-auto" variant="default">
-                Comprar Agora - R$ 19,99
-              </Button>
+              <CreateBillingButton hasCustomerId={hasCustomerId} />
             </div>
           </div>
         </div>

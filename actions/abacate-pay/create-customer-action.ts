@@ -2,21 +2,7 @@
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-
-interface CustomerResponseProps {
-  success: boolean;
-  data: {
-    id: string;
-    metadata: {
-      name: string;
-      cellphone: string;
-      taxId: string;
-      email: string;
-      zipCode: string;
-    };
-  };
-  error: null | string;
-}
+import { CustomerResponseProps } from "@/types/abacate-pay";
 
 export async function createCustomerAction() {
   try {
