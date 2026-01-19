@@ -1,4 +1,3 @@
-import { getCreditsQuantityAction } from "@/actions/credits/get-credits-quantity-action";
 import FinanceArea from "@/components/form/finance-area";
 import FinanceFormFake from "@/components/form/finance-form-fake";
 import { auth } from "@/lib/auth";
@@ -6,7 +5,6 @@ import { auth } from "@/lib/auth";
 export default async function Home() {
   const session = await auth();
   const hasSession = session && session.user;
-  const credits = await getCreditsQuantityAction();
 
   return (
     <div className="mx-auto max-w-300 p-2 mt-12">
@@ -74,7 +72,7 @@ export default async function Home() {
           </div>
 
           <div className="pb-20">
-            {hasSession && <FinanceArea credits={credits} />}
+            {hasSession && <FinanceArea />}
             {!hasSession && <FinanceFormFake />}
           </div>
         </div>

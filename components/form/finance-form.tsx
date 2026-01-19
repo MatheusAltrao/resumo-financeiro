@@ -1,4 +1,5 @@
 "use client";
+import { useCredits } from "@/hooks/use-credits";
 import { FinanceResume } from "@/types/finance-resume";
 import toast from "react-hot-toast";
 import GenerateResumeLoading from "../loadings/generate-resume-loading";
@@ -15,10 +16,10 @@ interface FinanceFormProps {
   isError: boolean;
   mutate: (formData: FormData) => void;
   financeData: FinanceResume | null;
-  credits: number;
 }
 
-export default function FinanceForm({ files, setFiles, isPending, isError, mutate, financeData, credits }: FinanceFormProps) {
+export default function FinanceForm({ files, setFiles, isPending, isError, mutate, financeData }: FinanceFormProps) {
+  const { data: credits } = useCredits();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -52,7 +53,7 @@ export default function FinanceForm({ files, setFiles, isPending, isError, mutat
                 <DropzoneUI files={files} setFiles={setFiles} isPending={isPending} />
               </div>
 
-              {!financeData && <ButtonsActionForm files={files} isPending={isPending} credits={credits} />}
+              {!financeData && <ButtonsActionForm files={files} isPending={isPending} credits={credits || 0} />}
 
               {isError && <div className="text-sm text-red-500 text-center">Ocorreu um erro ao enviar os arquivos. Tente novamente.</div>}
             </form>

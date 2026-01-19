@@ -1,4 +1,5 @@
 "use client";
+import { useCredits } from "@/hooks/use-credits";
 import useGenerateFinanceResume from "@/hooks/use-generate-finance-resume";
 import { FinanceResume } from "@/types/finance-resume";
 import { useEffect, useState } from "react";
@@ -7,11 +8,8 @@ import FinanceResumeDisplay from "../finance-resume/finance-resume-display";
 import FinanceForm from "./finance-form";
 import NewAnalyseButton from "./new-analyse-button";
 
-interface FinanceAreaProps {
-  credits: number;
-}
-
-export default function FinanceArea({ credits }: FinanceAreaProps) {
+export default function FinanceArea() {
+  const { data: credits } = useCredits();
   const { files, setFiles, data, isError, isPending, mutate } = useGenerateFinanceResume();
   const [financeData, setFinanceData] = useState<FinanceResume | null>(null);
 
@@ -50,15 +48,7 @@ export default function FinanceArea({ credits }: FinanceAreaProps) {
 
   return (
     <div className="space-y-8">
-      <FinanceForm
-        files={files}
-        financeData={financeData}
-        isError={isError}
-        isPending={isPending}
-        mutate={mutate}
-        setFiles={setFiles}
-        credits={credits}
-      />
+      <FinanceForm files={files} financeData={financeData} isError={isError} isPending={isPending} mutate={mutate} setFiles={setFiles} />
       {financeData && <NewAnalyseButton setFinanceData={setFinanceData} />}
       {financeData && <FinanceResumeDisplay data={financeData} />}
     </div>

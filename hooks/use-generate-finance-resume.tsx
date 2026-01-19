@@ -3,10 +3,12 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useInvalidateCredits } from "./use-credits";
 
 export default function useGenerateFinanceResume() {
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
+  const invalidateCredits = useInvalidateCredits();
 
   const { data, isError, isPending, error, mutate } = useMutation({
     mutationFn: async (formData: FormData) => generateFinanceResumePrompt(formData),
@@ -20,6 +22,7 @@ export default function useGenerateFinanceResume() {
 
       toast.success(`Gerado com sucesso`);
       setFiles([]);
+      invalidateCredits(); // Atualiza os créditos imediatamente
       router.refresh();
     },
     onError: (error) => {
