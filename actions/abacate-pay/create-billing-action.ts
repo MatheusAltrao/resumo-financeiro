@@ -23,6 +23,8 @@ export async function createBillingAction() {
     taxId: "",
   };
 
+  console.log(customer);
+
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   try {
     const options = {

@@ -900,6 +900,8 @@ export const UserScalarFieldEnum = {
   image: 'image',
   credits: 'credits',
   abacatePayCustomerId: 'abacatePayCustomerId',
+  cpf: 'cpf',
+  phoneNumber: 'phoneNumber',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
