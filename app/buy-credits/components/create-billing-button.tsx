@@ -20,8 +20,8 @@ export default function CreateBillingButton({ hasCustomerId }: CreateBillingButt
         const url = billing.data.url;
         router.push(url);
       } catch (error) {
-        console.error("Erro ao criar cliente no Abacate Pay:", error);
-        toast.error("Erro ao criar cliente no Abacate Pay.");
+        console.error("Erro ao criar cobrança no Abacate Pay:", error);
+        toast.error("Erro ao criar cobrança no Abacate Pay.");
       }
     });
   };
