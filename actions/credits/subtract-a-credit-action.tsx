@@ -2,7 +2,6 @@
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { getCreditsQuantityAction } from "./get-credits-quantity-action";
 
 export async function subtractACredit() {
   const session = await auth();
@@ -14,20 +13,27 @@ export async function subtractACredit() {
   const userId = session.user.id;
 
   try {
-    const credits = await getCreditsQuantityAction();
-
-    if (credits <= 0) {
-      throw new Error("Créditos insuficientes");
-    }
-
-    await prisma.user.update({
-      where: { id: userId },
-      data: { credits: { decrement: 1 } },
+    // Transação atômica para prevenir race condition
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId,
+        credits: { gt: 0 }, // Só atualiza se créditos > 0
+      },
+      data: {
+        credits: { decrement: 1 },
+      },
+      select: {
+        credits: true,
+      },
     });
 
     return true;
   } catch (error) {
-    console.log("Erro ao subtrair crédito do usuário:", error);
-    throw new Error("Erro ao subtrair crédito do usuário");
+    // Se falhou, é porque não tem créditos ou erro de DB
+    if (error instanceof Error && error.message.includes("Record to update not found")) {
+      throw new Error("Créditos insuficientes");
+    }
+    console.error("Erro ao subtrair crédito:", error);
+    throw new Error("Erro ao processar créditos");
   }
 }

@@ -2,6 +2,10 @@
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { z } from "zod";
+
+// Validação de UUID
+const analyzeIdSchema = z.string().uuid("ID da análise inválido");
 
 export async function getAnalyzeByIdAction(analyzeId: string) {
   const session = await auth();
@@ -10,8 +14,10 @@ export async function getAnalyzeByIdAction(analyzeId: string) {
     throw new Error("Usuário não autenticado");
   }
 
-  if (!analyzeId) {
-    throw new Error("ID da análise é obrigatório");
+  // Validar formato do ID
+  const validation = analyzeIdSchema.safeParse(analyzeId);
+  if (!validation.success) {
+    throw new Error("ID da análise inválido");
   }
 
   const userId = session.user.id;

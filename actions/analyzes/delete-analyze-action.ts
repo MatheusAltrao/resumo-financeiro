@@ -3,6 +3,10 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
+
+// Validação de UUID
+const analyzeIdSchema = z.string().uuid("ID da análise inválido");
 
 export async function deleteAnalyzeAction(analyzeId: string) {
   const session = await auth();
@@ -11,18 +15,32 @@ export async function deleteAnalyzeAction(analyzeId: string) {
     throw new Error("Usuário não autenticado");
   }
 
-  if (!analyzeId) {
-    throw new Error("ID da análise é obrigatório");
+  // Validar formato do ID
+  const validation = analyzeIdSchema.safeParse(analyzeId);
+  if (!validation.success) {
+    throw new Error("ID da análise inválido");
   }
 
   const userId = session.user.id;
 
   try {
+    // Verificar se existe e pertence ao usuário ANTES de deletar
+    const analyze = await prisma.analyze.findUnique({
+      where: { id: analyzeId },
+      select: { userId: true },
+    });
+
+    if (!analyze) {
+      throw new Error("Análise não encontrada");
+    }
+
+    if (analyze.userId !== userId) {
+      throw new Error("Análise não encontrada");
+    }
+
+    // Agora sim, deletar
     await prisma.analyze.delete({
-      where: {
-        id: analyzeId,
-        userId: userId,
-      },
+      where: { id: analyzeId },
     });
 
     revalidatePath("/analyzes");
