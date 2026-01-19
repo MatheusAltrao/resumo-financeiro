@@ -28,7 +28,7 @@ export default function CreateBillingButton({ hasCustomerId }: CreateBillingButt
 
   return (
     <Button disabled={!hasCustomerId || isPending} onClick={handleCreateCustomer}>
-      {isPending ? "Criando..." : "Comprar Agora"}
+      {isPending ? "indo para o checkout..." : "Comprar Agora"}
     </Button>
   );
 }
