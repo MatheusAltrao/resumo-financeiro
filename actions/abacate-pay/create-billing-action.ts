@@ -23,6 +23,7 @@ export async function createBillingAction() {
     taxId: "",
   };
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   try {
     const options = {
       method: "POST",
@@ -40,8 +41,8 @@ export async function createBillingAction() {
             price: 1999,
           },
         ],
-        returnUrl: `${process.env.NEXT_PUBLIC_APP_URL}/buy-credits`,
-        completionUrl: `${process.env.NEXT_PUBLIC_APP_URL}/`,
+        returnUrl: `${baseUrl}/buy-credits`,
+        completionUrl: `${baseUrl}/`,
         customerId: customer.id,
         customer: {
           name: customer.name,

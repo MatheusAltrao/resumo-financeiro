@@ -31,18 +31,15 @@ export default function CreateCustomerButton({ hasCustomerId }: CreateCustomerBu
 
   return (
     <Button disabled={hasCustomerId || isPending} onClick={handleCreateCustomer} className="w-full sm:w-auto" variant={"outline"}>
-      {hasCustomerId ? (
-        <div className="flex items-center gap-2">
-          {isPending && <IconLoading text="Criando..." />}
-          {!isPending && (
+      <div className="flex items-center gap-2">
+        {isPending && <IconLoading text="Criando..." />}
+        {!isPending ||
+          (hasCustomerId && (
             <div className="flex items-center gap-2">
               <CheckCircle /> Cliente Criado
             </div>
-          )}
-        </div>
-      ) : (
-        "Criar Conta de Cliente"
-      )}
+          ))}
+      </div>
     </Button>
   );
 }
