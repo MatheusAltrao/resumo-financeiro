@@ -12,7 +12,7 @@ interface DropzoneUIProps {
   isPending: boolean;
 }
 
-export default function DropzoneUI({ files, setFiles, maxFiles = 3, isPending }: DropzoneUIProps) {
+export default function DropzoneUI({ files, setFiles, maxFiles = 2, isPending }: DropzoneUIProps) {
   const [previews, setPreviews] = useState<{ [key: string]: string }>({});
   const [error, setError] = useState<string | null>(null);
 

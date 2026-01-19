@@ -8,7 +8,7 @@ export default function FormDescription() {
         <li>Faça o download do arquivo em formato CSV</li>
         <li>Arraste o arquivo aqui ou clique para fazer upload</li>
         <li>Receba uma análise completa dos seus dados financeiros</li>
-        <li className="text-red-500">Você só pode enviar apenas 3 arquivos por vez</li>
+        <li className="text-red-500">Você só pode enviar apenas 2 arquivos por vez</li>
         <li>Aguarde a conclusão do processamento dos seus documentos, pode demorar até alguns minutos</li>
       </ol>
     </div>
